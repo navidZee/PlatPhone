@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace PlatPhone.Controllers
+namespace PlatPhone.Web.Controllers
 {
     public class HomeController : Controller
     {
