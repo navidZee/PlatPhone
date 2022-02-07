@@ -1,0 +1,9 @@
+G:\Project\Students\PlatPhone\PlatPhone.DataLayer\bin\Debug\netstandard2.1\PlatPhone.DataLayer.deps.json
+G:\Project\Students\PlatPhone\PlatPhone.DataLayer\bin\Debug\netstandard2.1\PlatPhone.DataLayer.dll
+G:\Project\Students\PlatPhone\PlatPhone.DataLayer\bin\Debug\netstandard2.1\PlatPhone.DataLayer.pdb
+G:\Project\Students\PlatPhone\PlatPhone.DataLayer\obj\Debug\netstandard2.1\PlatPhone.DataLayer.csprojAssemblyReference.cache
+G:\Project\Students\PlatPhone\PlatPhone.DataLayer\obj\Debug\netstandard2.1\PlatPhone.DataLayer.AssemblyInfoInputs.cache
+G:\Project\Students\PlatPhone\PlatPhone.DataLayer\obj\Debug\netstandard2.1\PlatPhone.DataLayer.AssemblyInfo.cs
+G:\Project\Students\PlatPhone\PlatPhone.DataLayer\obj\Debug\netstandard2.1\PlatPhone.DataLayer.csproj.CoreCompileInputs.cache
+G:\Project\Students\PlatPhone\PlatPhone.DataLayer\obj\Debug\netstandard2.1\PlatPhone.DataLayer.dll
+G:\Project\Students\PlatPhone\PlatPhone.DataLayer\obj\Debug\netstandard2.1\PlatPhone.DataLayer.pdb
