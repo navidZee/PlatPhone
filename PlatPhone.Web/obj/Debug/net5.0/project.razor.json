@@ -1,5 +1,5 @@
 {
-  "FilePath": "g:\\Project\\Students\\PlatPhone\\PlatPhone.csproj",
+  "FilePath": "g:\\Project\\Students\\PlatPhone\\PlatPhone.Web\\PlatPhone.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "5.0",
@@ -15619,23 +15619,23 @@
   "RootNamespace": "PlatPhone",
   "Documents": [
     {
-      "FilePath": "g:\\Project\\Students\\PlatPhone\\Views\\_ViewImports.cshtml",
-      "TargetPath": "Views\\_ViewImports.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "g:\\Project\\Students\\PlatPhone\\Views\\Shared\\_Layout.cshtml",
+      "FilePath": "g:\\Project\\Students\\PlatPhone\\PlatPhone.Web\\Views\\Shared\\_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "g:\\Project\\Students\\PlatPhone\\Views\\Home\\Index.cshtml",
-      "TargetPath": "Views\\Home\\Index.cshtml",
+      "FilePath": "g:\\Project\\Students\\PlatPhone\\PlatPhone.Web\\Views\\_ViewStart.cshtml",
+      "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "g:\\Project\\Students\\PlatPhone\\Views\\_ViewStart.cshtml",
-      "TargetPath": "Views\\_ViewStart.cshtml",
+      "FilePath": "g:\\Project\\Students\\PlatPhone\\PlatPhone.Web\\Views\\_ViewImports.cshtml",
+      "TargetPath": "Views\\_ViewImports.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "g:\\Project\\Students\\PlatPhone\\PlatPhone.Web\\Views\\Home\\Index.cshtml",
+      "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
     }
   ],
