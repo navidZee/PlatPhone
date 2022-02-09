@@ -10,7 +10,7 @@ using PlatPhone.DataLayer.Context;
 
 namespace PlatPhone.Web
 {
-    public class Startup
+    public class Startup 
     {
         public Startup(IConfiguration configuration)
         {
