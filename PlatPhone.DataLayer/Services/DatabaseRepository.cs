@@ -1,107 +1,96 @@
-﻿// using PlatPhone.DataLayer;
-// using System;
-// using System.Collections.Generic;
-// using System.Data.Entity;
-// using System.Data.SqlClient;
-// using System.Linq;
-// using System.Linq.Expressions;
-// using System.Text;
-// using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using PlatPhone.DataLayer.Context;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
-// namespace PlatPhone.DataLayer.Service
-// {
-//     public class DatabaseRepository<TEntity> where TEntity : class
-//     {
-//         private EF entity;
-//         private DbSet<TEntity> _dbset;
+namespace PlatPhone.DataLayer.Service
+{
+    public class DatabaseRepository<TEntity> where TEntity : class
+    {
+        private ApplicationContext entity;
+        private DbSet<TEntity> _dbset;
 
-//         public virtual List<TEntity> Select(Expression<Func<TEntity, bool>> where = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderby = null, string includes = "")
-//         {
-//             IQueryable<TEntity> query = _dbset;
+        public DatabaseRepository(ApplicationContext context)
+        {
+            _dbset = context.Set<TEntity>();
+            entity = context;
+        }
 
-//             if (where != null)
-//             {
-//                 query = query.Where(where);
-//             }
+        public virtual List<TEntity> Select(Expression<Func<TEntity, bool>> where = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderby = null, string includes = "")
+        {
+            IQueryable<TEntity> query = _dbset;
 
-//             if (orderby != null)
-//             {
-//                 query = orderby(query);
-//             }
+            if (where != null)
+            {
+                query = query.Where(where);
+            }
 
-//             if (includes != "")
-//             {
-//                 foreach (string include in includes.Split(','))
-//                 {
-//                     query = query.Include(include);
-//                 }
-//             }
+            if (orderby != null)
+            {
+                query = orderby(query);
+            }
 
-//             return query.ToList();
-//         }
+            if (includes != "")
+            {
+                foreach (string include in includes.Split(','))
+                {
+                    query = query.Include(include);
+                }
+            }
 
+            return query.ToList();
+        }
 
-//         public virtual IQueryable<TEntity> GetAll()
-//         {
-//             return _dbset.AsQueryable();
-//         }
+        public virtual IQueryable<TEntity> GetAll()
+        {
+            return _dbset.AsQueryable();
+        }
 
-//         public DatabaseRepository(EF context)
-//         {
-//             _dbset = context.Set<TEntity>();
-//             entity = context;
-//         }
+        public void Delete(int id)
+        {
+            _dbset.Remove(Read(id));
+        }
 
+        public void Create(TEntity record)
+        {
+            _dbset.Add(record);
+        }
 
-//         public void Delete(int id)
-//         {
-//             _dbset.Remove(Read(id));
-//         }
+        public List<TEntity> Read()
+        {
+            return _dbset.ToList();
+        }
 
-//         public void Create(TEntity record)
-//         {
-//             _dbset.Add(record);
+        public TEntity Read(int id)
+        {
+            return _dbset.Find(id);
+        }
 
-//         }
+        public List<TEntity> Read(int n, bool flag)
+        {
+            return _dbset.Take(n).ToList();
+        }
 
-//         public List<TEntity> Read()
-//         {
-//             return _dbset.ToList();
-//         }
+        public void Update(TEntity record)
+        {   
+            _dbset.Attach(record);
+            entity.Entry(record).State = EntityState.Modified;
+            Save();
+        }
 
-//         public TEntity Read(int id)
-//         {
-//             return _dbset.Find(id);
-//         }
-
-        
-//         public List<TEntity> Read(int n, bool flag)
-//         {
-//             return _dbset.Take(n).ToList();
-//         }
-
-//         public void Update(TEntity record)
-//         {
-//             //TEntity old = Read(id);
-//             _dbset.Attach(record);
-//             entity.Entry(record).State = System.Data.Entity.EntityState.Modified;
-//             Save();
-//         }
-
-//         public bool Save()
-//         {
-//             try
-//             {
-//                var x = entity.SaveChanges();
-//                 //return "Successfully";
-//                 return true;
-//             }
-//             catch (Exception ex)
-//             {
-//                 //return "UnSuccessfully";
-//                 return false;
-//             }
-//         }
-
-//     }
-// }
+        public bool Save()
+        {
+            try
+            {
+                var x = entity.SaveChanges();             
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+    }
+}
