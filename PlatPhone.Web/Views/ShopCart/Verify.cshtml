@@ -1,0 +1,34 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>تاییده</title>
+    <link href="/Areas/Admin/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        @if (ViewBag.IsSuccess == true)
+        {
+            <div class="alert alert-success">
+                <h2>تراکنش با موفقیت انجام شد</h2>
+                <hr />
+                <p>کد پیگیری شما : @ViewBag.RefId</p>
+                <a href="/User/Order">فاکتور</a>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                <h2>تراکنش با شکست مواجه شد</h2>
+                <hr />
+                <a href="/ShopCart/Index" class="link">سبدخرید</a>
+            </div>
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+﻿@model PlatPhone.DataLayer.User
+
+<div class="col-md-3 col-lg-3 col-sm-12 col-xs-12 fixedElement" style="height:auto">
+    <div>
+        <div class="profile-sidebar btn-shadow personInfo">
+            <div style="text-align:right">
+                <h4 class="text text-info" style="margin-right:4%">حساب شما</h4>
+            </div>
+            <div class="profile-usermenu">
+                <ul style="direction:rtl">
+                    <li class='@((ViewBag.active == 0) ?  "active" :"")'>
+                        <a href="/User/ProfileUser">
+                            <i class="fa fa-user" style="font-size:16px"></i>
+                            پروفایل
+                        </a>
+                    </li>
+                    <li class='@((ViewBag.active == 1) ?  "active" :"")'>
+                        <a href="/User/Orders">
+                            <i class="fa fa-shopping-cart" style="font-size:16px"></i>
+                            سفارشات
+                        </a>
+                    </li>
+                    <li class='@((ViewBag.active == 2) ?  "active" :"")'>
+                        <a href="/User/EditePersonalInformation">
+                            <i class="fa fa-user" style="font-size:16px"></i>
+                            تغییر اطلاعات شخصی
+                        </a>
+                    </li>
+                    @if (Model.Role == PlatPhone.DataLayer.Enum.RoleEnum.Admin)
+                    {
+                        <li>
+                            <a href="/Admin/Home">
+                                <i class="fa fa-user" style="font-size:16px"></i>
+                                پنل مدیریت
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- END MENU -->
+</div>
+
+<style>
+    div.profile-usermenu ul li {
+        padding: 10px;
+    }
+</style>

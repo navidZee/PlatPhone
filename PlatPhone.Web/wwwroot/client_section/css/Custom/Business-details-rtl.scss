@@ -1,0 +1,192 @@
+﻿/*============================================================================================*/
+/* Your custom styles below */
+/*============================================================================================*/
+/*Business Detail*/
+.location {
+    padding: 0 0 0 0;
+}
+
+.detail_title_box {
+    display: block;
+    clear: both;
+    font-size: 12px;
+}
+
+.detail_title_btn {
+    margin-left: 0;
+    font-size: 12px;
+    background-color: #f0f0f0;
+    margin-bottom:1em;
+}
+
+.buss-menu {
+    border-radius: 5px;
+
+    ul {
+        list-style-type: none;
+        margin-right: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+
+        li {
+            float: right;
+            margin-left: 0;
+            margin-right: 0;
+            border: 1px solid #e7e7e7;
+            font-size: small;
+            /*background-color:orange;*/
+            a {
+                display: block;
+                color: #666;
+                text-align: center;
+                padding: 7px 11px;
+                text-decoration: none;
+                font-size: smaller;
+
+                &:hover:not(.active) {
+                    background-color: #ddd;
+                }
+
+                &.active {
+                    color: white;
+                    background-color: #4CAF50;
+                }
+
+                span {
+                    margin-right: 4px;
+                }
+            }
+        }
+    }
+}
+
+hero_in hotels_detail .wrapper {
+    background-color: red;
+}
+
+.slider-image {
+    width: 100%;
+    height: 100%;
+    float: left;
+    padding-left: 0;
+    background-color: green;
+}
+
+.opening-hours {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .opening-hours-time-box {
+        width: 130px;
+        margin-left: 1em;
+
+        .opening-hours-time {
+            display: flex;
+
+            .time-box {
+                width: 60px;
+            }
+        }
+    }
+}
+
+.reply-container {
+    margin-left: 1em;
+}
+
+.message {
+    color: lightgreen;
+    font-size: small;
+}
+
+.address-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.read-only-stars {
+    float: right;
+}
+
+.rate-box {
+    margin-right: 0.5em;
+}
+.votes-reviews {
+    margin-right: 2px;
+    margin-left: 2px;
+}
+.slider-business-detail{
+    height:150px;
+}
+.slider-first-image img {
+    max-width: 100%;
+    width: auto;
+}
+
+.descripton {
+    margin-top: 10px;
+}
+@media screen and (max-width:1200px) {
+    .buss-menu {
+        width: 165px;
+
+        ul li a span {
+            display: none;
+        }
+    }
+
+    .buss-menu ul li a i {
+        display: block;
+    }
+}
+@media screen and (max-width:995px) {
+    .open-box {
+        /*width: 100%;*/
+    }
+}
+
+@media screen and (max-width:768px) {
+    .open-box {
+        margin-left: 1em;
+    }
+}
+
+@media screen and (max-width:400px) {
+    .buss-menu {
+        width: 100%;
+        margin: auto;
+        display: block;
+
+        ul li {
+            width: 25%;
+
+            a span {
+                display: none;
+            }
+        }
+    }
+
+    .detail_title_btn {
+        width: 100%;
+        display: block;
+    }
+
+    .parent_detail_title_btn {
+        width: 100%;
+        display: block;
+        flex: unset;
+        max-width: unset;
+    }
+
+    .parent-buss-menu {
+        width: 100%;
+        display: block;
+        flex: unset;
+        max-width: unset;
+        display: flex;
+        justify-content: center;
+    }
+}

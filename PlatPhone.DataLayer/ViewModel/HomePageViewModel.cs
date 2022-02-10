@@ -1,7 +1,7 @@
 ﻿using PlatPhone.DataLayer;
 using System.Collections.Generic;
 
-namespace FloristStore.Models.ViewModel
+namespace PlatPhone.Models.ViewModel
 {
     public class HomePageViewModel
     {

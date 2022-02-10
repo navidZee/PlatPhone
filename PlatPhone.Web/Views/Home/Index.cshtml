@@ -1,7 +1,192 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model PlatPhone.Models.ViewModel.HomePageViewModel
+
+@{
+    ViewBag.Title = "Home";
 }
 
-<div>
-    Hello .Net5
-</div> 
+<partial name="_Header" model="Model.ClientMenuLinks" />
+
+<main class="pattern">
+    <section class="hero_single version_2" style="background-image: url('https://eghtesaad24.ir/files/fa/news/1399/4/3/67924_568.jpg')">
+        <div class="wrapper">
+            <div class="container">
+                <p>فروشگاه آنلاین پلتفون</p>
+                <div class="row no-gutters custom-search-input-2">
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <input class="form-control" type="text" id="keyWord" placeholder="دنبال چه چیزی میگردید">
+                            <i class="icon_search"></i>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <select class="wide" style="" id="searchCategoris">
+                            <option value="0">تمام دسته بندی ها</option>
+
+                        </select>
+                        <div class="nice-select wide" tabindex="0" id="searchCategorisView">
+                            <span class="current">تمام دسته بندی ها</span>
+                            <ul class="list" id="listCat">
+                                <li data-value="0" class="option selected">تمام دسته بندی ها</li>
+                                @foreach (var item in Model.Categories)
+                                {
+                                    <li data-value="@item.Id" class="option">@item.Name</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="submit" onclick="search()" class="rounded-right color-btn-primary" value="جستجو">
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+        </div>
+    </section>
+    <!-- /hero_single -->
+
+    <div class="main_categories">
+        <div class="container">
+            <ul class="clearfix">
+                @foreach (var item in Model.Categories.OrderByDescending(g => g.Id).Take(5))
+                {
+                    <li>
+                        <a href="/Product/ListProduct?Groups=@item.Id&Address=&keyWord=">
+                            <img src="Image/Uploade/CatrgoryImage/@item.ImgName" alt="@item.Name" />
+                            <h3>@item.Name</h3>
+                        </a>
+                    </li>
+                }
+
+            </ul>
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /main_categories -->
+
+    <div class="container margin_60_35">
+
+        <div class="main_title_3">
+            <span></span>
+            <h5>جدید ترین محصولات</h5>
+            <p>پیدا کردن بهترین موبایل ها در سطح شهر</p>
+            <a href="/Product/ListProduct?Groups=&Address=&keyWord=">مشاهده همه</a>
+        </div>
+        <div class="row add_bottom_30">
+            @foreach (var item in Model.NewProducts)
+            {
+                <div class="col-lg-3 col-sm-6">
+                    <a href="/Product/DetailProduct/@item.Id" title="@item.Description" class="grid_item small">
+                        <figure>
+                            <img src="Image/Uploade/ProductImage/@item.ImageUrl" alt="@item.Name">
+                            <div class="info">
+                                <div class="cat_star">
+                                    @if (item.Discount > 0)
+                                    {
+                                        <div class="cat_star">
+                                            @{ decimal discount = (item.Price * item.Discount) / 100;
+                                                decimal total = item.Price - discount;}
+                                            <div> <span style="">@total.ToString("#,00") ریال</span></div>
+                                        </div>
+                                        <h3>@item.Name</h3>
+                                    }
+                                    else
+                                    {
+
+                                        <div>@item.Price.ToString("#,00") ریال</div>
+                                        <h3>@item.Name</h3>
+
+                                    }
+                                </div>
+                            </div>
+                        </figure>
+                    </a>
+                </div>
+            }
+        </div>
+
+        <div class="main_title_3">
+            <span></span>
+            <h5 class="color-blue">محصولات تخفیف دار</h5>
+            <p>پیدا کردن ارزان ترین موبایل ها !</p>
+            <a href="/Product/ListProduct/?hisDiscount=1&Address=&keyWord=">مشاهده همه</a>
+        </div>
+        <div class="row add_bottom_30">
+            @foreach (var item in Model.HasDiscountProducts)
+            {
+                <div class="col-lg-3 col-sm-6">
+                    <a href="/Product/DetailProduct/@item.Id" title="@item.Description" class="grid_item small">
+                        <figure>
+                            <img src="Image/Uploade/ProductImage/@item.ImageUrl" alt="@item.Name" />
+                            <div class="info">
+                                <div class="cat_star">
+                                    @{ decimal discount = (item.Price * item.Discount) / 100;
+                                        decimal total = item.Price - discount;}
+                                    <div> <span style="" >@total.ToString("#,00") ریال</span></div>
+                                </div>
+                                <h3>@item.Name</h3>
+                            </div>
+                        </figure>
+                    </a>
+                </div>
+            }
+
+        </div>
+
+        <div class="main_title_3">
+            <span></span>
+            <h5>اخبار جدید</h5>
+            <p>خبرهای تازه</p>
+            <a href="/News/ListNews">مشاهده همه</a>
+        </div>
+        <div class="row add_bottom_30">
+            @if (Model.News != null)
+            {
+                foreach (var item in Model.News)
+                {
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="/News/DetailNews/@item.Id" title="@item.Title" class="grid_item small">
+                            <figure>
+                                <img src="Image/Uploade/NewsImage/@item.Image" alt="News">
+                                <div class="info">
+                                    <h3>@item.Title</h3>
+                                </div>
+                            </figure>
+                        </a>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+
+    <!-- /container -->
+    <div class="call_section pattern">
+        <div class="wrapper">
+            <div class="container margin_80_55">
+                <div class="main_title_2">
+                    <h2 class="color-primary">تمام دسته بندی ها</h2>
+                </div>
+                <div class="row justify-content-center">
+                    @foreach (var item in Model.Categories)
+                    {
+                        <div class="col-lg-3 col-md-6">
+                            <a href="/Product/ListProduct?Groups=@item.Id&Address=&keyWord=" class="box_cat_home">
+                                <img src="Image/Uploade/CatrgoryImage/@item.ImgName" width="65" height="65" alt="@item.Name">
+                                <h3>@item.Name</h3>
+                            </a>
+                        </div>
+                    }
+
+                </div>
+                <!-- /row -->
+            </div>
+        </div>
+        <!-- /wrapper -->
+    </div>
+    <!--/call_section-->
+
+</main>
+
+@section Scripts{
+    <script src="Script/Search/Search.js"></script>
+}

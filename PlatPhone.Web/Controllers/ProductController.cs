@@ -1,23 +1,28 @@
-﻿using DataLayer;
-using DataLayer.Enum;
-using DataLayer.Service;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PlatPhone.DataLayer;
+using PlatPhone.DataLayer.Service;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Web.Mvc;
-namespace FloristStore.Controllers
+namespace PlatPhone.Controllers
 {
     public class ProductController : BaseController
     {
-        DatabaseRepository<Product> Product = new DatabaseRepository<Product>(new EF());
-        DatabaseRepository<Comment> Comment = new DatabaseRepository<Comment>(new EF());
-        EF ef = new EF();
+        private DatabaseRepository<Product> productService;
+        private DatabaseRepository<Comment> commentService;
+
+        public ProductController(DatabaseRepository<Product> productService,
+            DatabaseRepository<Comment> commentService)
+        {
+            this.productService = productService;
+            this.commentService = commentService;
+        }
 
         // GET: Product
         public IActionResult ListProduct(int? Groups, int? hisDiscount, string Address, string keyWord, int pageId = 1)
         {
-            var Products = Product.GetAll().Where(g => !g.IsDeleted);
+            var Products = productService.GetAll().Where(g => !g.IsDeleted);
 
             if (Groups.HasValue && Groups != 0)
                 Products = Products.Where(g => g.CategoryId == Groups);
@@ -30,21 +35,21 @@ namespace FloristStore.Controllers
         }
         public IActionResult DetailProduct(int? id)
         {
-            var Products = Product.GetAll().Where(g => !g.IsDeleted);
+            var Products = productService.GetAll().Where(g => !g.IsDeleted);
 
             if (!id.HasValue || !Products.Any(g => g.Id == id))
                 return Redirect("/Product/ListProduct");
 
             Tuple<Product, List<Comment>, bool> model = new Tuple<Product, List<Comment>, bool>(
                 Products.Where(g => g.Id == id).Include(g => g.Category).FirstOrDefault(),
-                Comment.GetAll().Where(g => g.Product_Id == id.Value && g.IsConfirmed).ToList(), false);
+                commentService.GetAll().Where(g => g.Product_Id == id.Value && g.IsConfirmed).ToList(), false);
 
             return View(model);
         }
 
         public IActionResult AddComment(int? id)
         {
-            var Products = Product.GetAll().Where(g => !g.IsDeleted);
+            var Products = productService.GetAll().Where(g => !g.IsDeleted);
 
             if (!id.HasValue || !Products.Any(g => g.Id == id))
                 return Redirect("Home/Product/AddComment");
@@ -55,8 +60,7 @@ namespace FloristStore.Controllers
         public IActionResult RegisterComment(Comment comment, int productId)
         {
             comment.Product_Id = productId;
-            ef.Comments.Add(comment);
-            ef.SaveChanges();
+            commentService.Create(comment);
 
             ViewBag.data = "نظر شما با موفقیت ثبت گردید پس از تایید مدیریت در سایت نمایش داده میشود";
             return Redirect("/Product/DetailProduct?showAl=true&?id=" + productId);

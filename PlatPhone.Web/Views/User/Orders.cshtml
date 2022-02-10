@@ -1,0 +1,123 @@
+﻿@model Tuple<PlatPhone.DataLayer.User, List<PlatPhone.DataLayer.InvoiceHeader>, bool, string>
+@using PlatPhone.Extention
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+<style>
+    @@media only screen and (max-width: 800) {
+        .timeline {
+            display: none !important;
+        }
+    }
+</style>
+
+<link href="client_section/Index.css" rel="stylesheet" />
+
+<div class="container" style="padding:20px 0 20px 0">
+    <div class="row ">
+        <partial name="_UserSideBar" model="Model.Item1" />
+        <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12" dir="rtl">
+            <div class="row">
+                @foreach (var invoiceHeader in Model.Item2)
+                {
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="margin-top:7px">
+                        <div class="profile-content personInfo" style="min-height:inherit">
+                            <div class="PersonalInformation">
+
+                                <div class="container">
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="invoice-title add_top_30">
+
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <address>
+                                                        <strong>اطلاعات مشتری</strong><br>
+                                                        @invoiceHeader.User.Name @invoiceHeader.User.Family<br>
+                                                        @invoiceHeader.User.Tell<br>
+                                                        @invoiceHeader.User.UserAddress
+                                                    </address>
+                                                </div>
+                                                <div class="col-6 text-right">
+                                                    <address>
+                                                        شماره فاکتور @invoiceHeader.FactorCode <br />
+                                                        <span style="color:white" class="badge bg-@(invoiceHeader.RequestLevel==PlatPhone.DataLayer.Enum.RequestLevel.delivered?"success":invoiceHeader.RequestLevel==PlatPhone.DataLayer.Enum.RequestLevel.Rejectd?"danger":invoiceHeader.RequestLevel==PlatPhone.DataLayer.Enum.RequestLevel.Sending?"info":"important")">
+                                                            @PlatPhone.Extention.EnumExtention.GetDescription(invoiceHeader.RequestLevel)
+                                                        </span>
+                                                    </address>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <address>
+
+                                                    </address>
+                                                </div>
+                                                <div class="col-6 text-right">
+                                                    <address>
+                                                        تاریخ ثبت فاکتور   @invoiceHeader.CreateDate.ToShamsi()
+                                                    </address>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="add_top_15">
+                                                <h3></h3>
+                                                <div class="table-responsive">
+                                                    <table class="table table-condensed">
+                                                        <thead>
+                                                            <tr>
+                                                                <td><strong>نام محصول</strong></td>
+                                                                <td class="text-center"><strong>فی</strong></td>
+                                                                <td class="text-center"><strong>تعداد</strong></td>
+                                                                <td class="text-center"><strong>تخفیف</strong></td>
+                                                                <td class="text-center"><strong>مجموع</strong></td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var InvoiceDetail in invoiceHeader.InvoiceDetails)
+                                                            {
+                                                                <tr>
+                                                                    <td>@InvoiceDetail.Product.Name</td>
+                                                                    <td class="text-center">@InvoiceDetail.Product.Price.ToString("#,0")</td>
+                                                                    <td class="text-center">@InvoiceDetail.Count</td>
+                                                                    <td class="text-center">@InvoiceDetail.Discount.ToString("#,0")</td>
+                                                                    <td class="text-center">@InvoiceDetail.Price.ToString("#,0")</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (Model.Item3)
+{
+    @section Scripts{
+        <script>
+            var foctorCode =@Model.Item4
+                Swal.fire("خرید شما با موفقیت ثبت شد کد فاکتور شما " + foctorCode);
+        </script>
+    }
+}

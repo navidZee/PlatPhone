@@ -1,0 +1,41 @@
+﻿@model List<PlatPhone.DataLayer.News>
+@{
+    ViewBag.Title = "ListNews";
+}
+
+<main>
+    <div class="sub_header_in color-bg-primary">
+        <div class="container">
+            <h1>آخرین اخبار</h1>
+        </div>
+        <!-- /container -->
+    </div>
+    <div class="container margin_60_35">
+        <div class="row">
+            <div class="col-lg-12">
+                @foreach (var item in Model.OrderByDescending(p => p.CreateDate))
+                {
+                    <div class="strip list_view">
+                        <div class="row no-gutters">
+                            <div class="col-lg-5">
+                                <figure>
+                                    <a href="/News/DetailNews/@item.Id"><img src="Image/Uploade/NewsImage/@item.Image" class="img-fluid" alt=""><div class="read_more"><span>خواندن خبر</span></div></a>
+                                </figure>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="wrapper">
+                                    <ul>
+                                        <h3><a href="/News/DetailNews/@item.Id">@item.Title</a></h3>
+                                        <small>@item.ShortDescription</small>
+                                        <small>@item.KeyWord</small>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>

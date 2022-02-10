@@ -1,0 +1,143 @@
+﻿/*============================================================================================*/
+/* Your custom styles below */
+/*============================================================================================*/
+/*User Profile*/
+.uk-file-upload {
+    width: 100%;
+    padding: 32px 16px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #f5f5f5;
+    text-align: center;
+    -webkit-transition: all 200ms ease-in;
+    transition: all 200ms ease-in;
+
+    p {
+        margin: 0;
+    }
+}
+
+.uk-text-small {
+    font-size: 12px !important;
+}
+
+.uk-margin-small-bottom {
+    margin-bottom: 8px !important;
+}
+
+.uk-text-muted {
+    color: #757575 !important;
+}
+
+.uk-text-small {
+    font-size: 12px;
+}
+
+.md-btn {
+    background: #fff;
+    border: none;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+    box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
+    min-height: 31px;
+    min-width: 70px;
+    padding: 2px 16px;
+    text-align: center;
+    text-shadow: none;
+    text-transform: uppercase;
+    -webkit-transition: all 280ms ease;
+    transition: all 280ms ease;
+    color: #212121;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    cursor: pointer;
+    -webkit-appearance: none;
+    display: inline-block;
+    vertical-align: middle;
+    font: 500 14px/31px "CGAFGFont",sans-serif !important;
+}
+
+.uk-form-file {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+
+    input[type="file"] {
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        width: 100%;
+        opacity: 0;
+        cursor: pointer;
+        left: 0;
+        font-size: 500px;
+    }
+}
+
+.uk-form input:not([type="radio"]):not([type="checkbox"]), .uk-form select {
+    vertical-align: middle;
+}
+
+.uk-form input, .uk-form select, .uk-form textarea {
+    box-sizing: border-box;
+    margin: 0;
+    border-radius: 0;
+    font: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+.preview {
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 991px) {
+    .box_style_cat {
+        display: block !important;
+    }
+}
+
+.list_general > ul > li:hover {
+    background-color: unset !important;
+}
+
+#carousel .item .title h4 {
+    color: white !important;
+}
+
+.LayoutUserProfile {
+    .sub_header_in h1 {
+        color: white !important;
+    }
+
+    main {
+        .content-wrapper {
+            margin-left: unset !important;
+            min-height: unset !important;
+
+            .box_general {
+                margin-bottom: unset !important;
+
+                .ImageUser {
+                    width: 80px !important;
+                    height: 80px !important;
+                    -webkit-border-radius: 50% !important;
+                    -moz-border-radius: 50% !important;
+                    -ms-border-radius: 50% !important;
+                    border-radius: 50% !important;
+                    overflow: hidden !important;
+                }
+
+                .owl-carousel {
+                    margin-top: unset !important;
+
+                    img {
+                        width: 100% !important;
+                    }
+                }
+            }
+        }
+    }
+}

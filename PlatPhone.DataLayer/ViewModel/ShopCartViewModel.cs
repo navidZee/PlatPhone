@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FloristStore.Models.ViewModel.ShopCart
+﻿namespace PlatPhone.Models.ViewModel
 {
     public class ShopCartViewModel 
     {

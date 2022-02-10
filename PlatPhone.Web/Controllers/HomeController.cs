@@ -1,14 +1,13 @@
-﻿using FloristStore.Models.ViewModel;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PlatPhone.DataLayer;
 using PlatPhone.DataLayer.Service;
+using PlatPhone.Models.ViewModel;
 using System.Linq;
 
-namespace FloristStore.Controllers
+namespace PlatPhone.Controllers
 {
     public class HomeController : BaseController
     {
-        private DatabaseRepository<User> userService;
         private DatabaseRepository<InvoiceHeader> invoiceHeaderService;
         private DatabaseRepository<InvoiceDetail> invoiceDetailService;
         private DatabaseRepository<Multimedia> multimediaService;
@@ -18,8 +17,7 @@ namespace FloristStore.Controllers
         private DatabaseRepository<News> newsService;
         private DatabaseRepository<ClientMenuLink> clientMenuLinkService;
 
-        public HomeController(DatabaseRepository<User> userService,
-            DatabaseRepository<Multimedia> multimediaService,
+        public HomeController(DatabaseRepository<Multimedia> multimediaService,
             DatabaseRepository<Product> productService,
             DatabaseRepository<Category> categoryService,
             DatabaseRepository<ContactUs> contactUsService,

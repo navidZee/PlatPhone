@@ -1,0 +1,57 @@
+﻿ <!-- COMMON SCRIPTS -->
+<script src="client_section/js/common_scripts.js"></script>
+<script src="client_section/js/star_plugin/jquery.star-rating-svg.js"></script>
+<script src="client_section/js/functions.js"></script>
+<script src="client_section/assets/validate.js"></script>
+<script src="client_section/fontawesome/js/all.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="client_section/js/Shared/Search.js"></script>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">خارج شدن از حساب</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">اگر مایل به خروج هستید روی دکمه خروج کلیک کنید</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">لغو</button>
+                <a class="btn btn-primary" id="Logout" href="/Account/Logout">خروج</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#Logout').click(function () {
+        $.get(`/api/Authentication/Logout`, function (response) {
+            if (response.success) {
+                window.location.href = "/";
+            }
+            else {
+                option = [];
+                option.push({ title: "position", value: "topLeft" });
+                option.push({ title: "rtl", value: direction });
+                option.push({ title: "id", value: "warning" });
+                iziTostCall($resource["Warning"], $resource["ErrorOccurred"], "5000", 'yellow', option);
+            }
+        });
+    })
+
+    function AddToCart(productId) {
+        $.ajax({
+            url: "/ShopCart/AddToCart",
+            data: { id: productId },
+            success: function () {
+                location.href = "/ShopCart/Index"
+            },
+            error: function () {
+                alert("ERROR");
+            }
+        });
+    }
+</script>

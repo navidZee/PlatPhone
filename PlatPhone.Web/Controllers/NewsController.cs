@@ -1,17 +1,23 @@
-﻿using DataLayer;
-using DataLayer.Service;
+﻿using Microsoft.AspNetCore.Mvc;
+using PlatPhone.DataLayer;
+using PlatPhone.DataLayer.Service;
 using System.Linq;
-using System.Web.Mvc;
 
-namespace FloristStore.Controllers
+namespace PlatPhone.Controllers
 {
     public class NewsController : BaseController
     {
-        DatabaseRepository<News> DbNews = new DatabaseRepository<News>(new EF());
+        private DatabaseRepository<News> newsService;
+
+        public NewsController(DatabaseRepository<News> newsService)
+        {
+            this.newsService = newsService;
+        }
+
         // GET: News
         public IActionResult ListNews(int pageId = 1)
         {
-            var News = DbNews.GetAll().Where(g => !g.IsDeleted);
+            var News = newsService.GetAll().Where(g => !g.IsDeleted);
             #region pageing
             int count = News.Count();
             //تعداد کل صفحع 
@@ -23,12 +29,14 @@ namespace FloristStore.Controllers
             #endregion
             return View(model: News/*.OrderBy(g => g.Id).Skip(skip).Take(15)*/.ToList());
         }
+        
         public IActionResult DetailNews(int ? id)
         {
-            var News = DbNews.GetAll().Where(g => !g.IsDeleted);
+            var News = newsService.GetAll().Where(g => !g.IsDeleted);
             if (!id.HasValue || !News.Any(g => g.Id == id))
                 return Redirect("/News/ListNews");
             return View(News.Where(g => g.Id == id).FirstOrDefault());
         }
+
     }
 }

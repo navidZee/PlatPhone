@@ -1,0 +1,35 @@
+﻿@model PlatPhone.DataLayer.News
+@using PlatPhone.Extention
+@{
+    ViewBag.Title = "DetailProduct";
+}asdasd
+<main>
+    <div class="container margin_60_35">
+        <div class="row">
+            <div class="col-lg-8">
+                <section id="description" style="padding:20px">
+                    <div class="detail_title_1">
+                        <h1>@Model.Title</h1>
+                    </div>
+                    <h5>توضیح کوتاهی درباره خبر</h5>
+                    <p>@Model.ShortDescription</p>
+                    <br />
+
+                    <h5>خبر</h5>
+                    <p>@Model.Description</p>
+
+                    <div class="text-right">
+                        @Model.CreateDate.ToShamsiWithTime()
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-4">
+                @if (Model.Image != null)
+                {
+                    <img class="img-fluid" src="Image/Uploade/NewsImage/@Model.Image" alt="News" />
+                }
+            </div>
+        </div>
+    </div>
+    <hr>
+</main>

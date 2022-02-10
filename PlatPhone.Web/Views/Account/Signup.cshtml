@@ -1,0 +1,75 @@
+﻿@model PlatPhone.DataLayer.User
+@{
+    /**/
+
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="SPARKER - Premium directory and listings template by Ansonika.">
+    <meta name="author" content="Ansonika">
+    <title>ورود</title>
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <!-- BASE CSS -->
+    <link href="client_section/css/bootstrap.min.css" rel="stylesheet">
+    <link href="client_section/css/style.css" rel="stylesheet">
+    <link href="client_section/css/vendors.css" rel="stylesheet">
+    <!-- YOUR CUSTOM CSS -->
+    <link href="client_section/css/custom.css" rel="stylesheet">
+</head>
+<body id="login_bg" style="background-image:url(https://golhayeshafabakhsh.com/wp-content/uploads/2017/10/5.jpg)">
+
+    <nav id="menu" class="fake_menu"></nav>
+
+    <div id="login">
+        @using (Html.BeginForm("Signup", "Account", FormMethod.Post, new { @class = "login100-form validate-form flex-sb flex-w" }))
+        {
+            <aside style="min-height: 50vh;margin-top: 40px;" class="text-right">
+                <figure>
+                    <label class="text text-danger">@ViewBag.successmessage</label>
+                </figure>
+                <form>
+                    <div class="form-group">
+                        <label>ایمیل</label>
+                        <input type="email" class="form-control" name="Email" id="Email">
+
+                    </div>
+                    <div class="form-group">
+                        <label>کلمه عبور</label>
+                        <input type="password" class="form-control" name="Password" id="Password" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>تکرار کلمه عبور</label>
+                        <input type="password" class="form-control" name="Confirm" id="Confirm" value="">
+                    </div>
+                    <div class="clearfix add_bottom_30">
+                        <div class="checkboxes float-left">
+                            <label class="container_check">
+                                مرا به خاطر بسپار
+                                <input type="checkbox" name="remember" id="remember">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">رمز عبور خود را فراموش کردید؟</a></div>
+                    </div>
+                    <button type="submit" class="btn_1 rounded full-width">ثبت نام</button>
+                    <div class="text-center add_top_10">تا کنون ثبت نام کرده اید؟ <strong><a href="/Account/Login">اینجا کلیک کنید</a></strong></div>
+                </form>
+
+            </aside>
+        }
+    </div>
+    <!-- /login -->
+    <!-- COMMON SCRIPTS -->
+    <script src="client_section/js/common_scripts.js"></script>
+    <script src="client_section/js/functions.js"></script>
+    <script src="client_section/assets/validate.js"></script>
+</body>
+</html>
+

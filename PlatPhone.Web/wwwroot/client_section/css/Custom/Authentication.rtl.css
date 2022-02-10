@@ -1,0 +1,209 @@
+﻿body {
+  background-color: white; }
+
+div.mainWorkLogin, div.mainWorkRegister, div.mainWorkExternalRegister {
+  font-family: iransancs !important; }
+
+input#SignIn {
+  text-align: center;
+  background-color: #02e5ae;
+  font-weight: bold;
+  color: white;
+  margin-top: 8px; }
+
+div.forgatpassword, div.remember {
+  font-size: 10px; }
+
+div.forgatpassword, div.remember label {
+  margin-right: 3px; }
+
+div.mainWorkRegister {
+  display: none; }
+
+.form-group {
+  margin-bottom: 8px !important;
+  direction: rtl; }
+
+div.remember {
+  float: right; }
+
+div.forgatpassword {
+  float: left; }
+
+div.forgatpassword a {
+  color: #02e5ae; }
+
+.googleIcon {
+  color: #00e8a6 !important; }
+
+.facebookIcon {
+  color: #4478ce !important; }
+
+.yahooIcon {
+  color: #393162 !important; }
+
+a {
+  cursor: pointer; }
+
+div.mainWorkLogin, div.mainWorkRegister, div.mainWorkExternalRegister {
+  text-align: right; }
+
+div.background-login {
+  background-image: url("../../img/login/final-login.png");
+  background-size: cover; }
+
+div.background-register {
+  background-image: url("../../img/login/Register.svg");
+  background-size: cover; }
+
+span.icons {
+  font-size: 28px;
+  display: inline-block;
+  text-align: right; }
+
+span.userIcon {
+  color: #105881; }
+
+.mainWorkLogin {
+  animation-name: mainWorkLogin;
+  animation-duration: 8s;
+  animation-delay: -1s; }
+
+div.mainWorkRegister {
+  animation-name: mainWorkRegister;
+  animation-duration: 8s;
+  animation-delay: -1s; }
+
+@font-face {
+  font-family: 'iransancs';
+  font-style: normal;
+  src: url("IRANSans/IRANSans.ttf"); }
+
+input[type=checkbox] {
+  vertical-align: sub; }
+
+div span.spanGoogleIcon {
+  float: right; }
+
+div span.spanFacebookIcon {
+  float: left; }
+
+@media screen and (max-width: 768px) {
+  .align-self-center {
+    padding-top: 20%;
+    align-self: unset !important; } }
+
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto; }
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 70% !important; } }
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 70% !important; } }
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 70% !important; } }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 70% !important; } }
+
+/*!
+Animate.css - http://daneden.me/animate
+Version - 3.4.0
+Licensed under the MIT license - http://opensource.org/licenses/MIT
+
+Copyright (c) 2015 Daniel Eden
+*/
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both; }
+
+@-webkit-keyframes fadeOutDown {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0); } }
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0); } }
+
+.fadeOutDown {
+  -webkit-animation-name: fadeOutDown;
+  animation-name: fadeOutDown; }
+
+@-webkit-keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0); }
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none; } }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0); }
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none; } }
+
+.fadeInUp {
+  -webkit-animation-name: fadeInUp;
+  animation-name: fadeInUp; }
+
+h4.LoginToAccount {
+  border-right: 3px solid #02e5ae;
+  font-size: 29px;
+  padding-right: inherit;
+  color: #07105d !important; }
+
+h4.LoginToAccount span {
+  color: #2b2974; }
+
+#logo_Img {
+  height: 125px; }
+
+.CosutomIcon {
+  color: #02e5ae; }
+
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: none !important;
+  outline: none !important;
+  box-shadow: none !important; }
+
+input[type=password], input[type=text], input[type=email] {
+  direction: rtl;
+  font-size: 14px;
+  border-right: none;
+  margin-right: -8px;
+  border-radius: 0px; }
+
+span.input-group-text {
+  background-color: #fff;
+  color: #02e5ae;
+  border-left: none;
+  float: right; }

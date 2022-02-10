@@ -1,0 +1,81 @@
+﻿@model bool
+@{
+    ViewBag.Title = "ContactUs";
+}
+
+@section Styles{
+    <style>
+        .main_title_3 {
+            border-left: none;
+        }
+    </style>
+}
+
+<main>
+    <div class="container margin_60_35">
+        <div class="row justify-content-center">
+            <div class="col-xl-5 col-lg-6 pr-xl-5">
+                <div class="main_title_3">
+                    <h2>برای ما پیام بفرستید</h2>
+                    <p>انتقادات و پیشنهادات خود را برای ما بنویسید</p>
+                </div>
+                <div id="message-contact"></div>
+                <form action="/Home/ContactUs" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>نام و نام خانوادگی</label>
+                                <input class="form-control" type="text" name="Name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>موضوع</label>
+                                <input class="form-control" type="text" name="Subject">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>پست الکترونیک</label>
+                                <input class="form-control" type="email" name="Email">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /row -->
+                    <div class="form-group">
+                        <label>پیام</label>
+                        <textarea class="form-control" name="Message" style="height: 150px;"></textarea>
+                    </div>
+                    <p class="add_top_30"><button class="color-btn-primary btn" id="btnContact"> ارسال</button></p>
+                </form>
+            </div>
+            <div class="col-xl-5 col-lg-6 pl-xl-5">
+                <div class="box_contacts">
+                    <i class="ti-support color-primary"></i>
+                    <h2>کمک نیاز دارید؟</h2>
+                </div>
+                <div class="box_contacts">
+                    <i class="ti-help-alt color-primary"></i>
+                    <h2>سوالات؟</h2>
+                </div>
+                <div class="box_contacts">
+                    <i class="ti-home color-primary"></i>
+                    <h2>آدرس</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts{
+    <script src="/client_section/js/Home/ContactUs.js"></script>
+    @if (Model)
+    {
+        <script>
+            Swal.fire(" ارتباط شما با موفقیت ثبت گردید و به مدیریت ارسال شد.");
+        </script>
+    }
+}

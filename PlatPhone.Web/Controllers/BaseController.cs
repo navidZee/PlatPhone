@@ -1,21 +1,22 @@
-﻿using FloristStore.Models.ViewModel.ShopCart;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
+using PlatPhone.DataLayer;
+using PlatPhone.DataLayer.Service;
 
-namespace FloristStore.Controllers
+namespace PlatPhone.Controllers
 {
 
     public class BaseController : Controller
     {
-        //DatabaseRepository<ClientMenuLink> myCMLTable = new DatabaseRepository<ClientMenuLink>(new EF());
-        //DatabaseRepository<Category> myCategoryTable = new DatabaseRepository<Category>(new EF());
+        private DatabaseRepository<Category> categoryService;
+        private DatabaseRepository<ClientMenuLink> clientMenuLinkService;
 
         public BaseController()
         {
+            //var clientMenuLinkService = (DatabaseRepository<ClientMenuLink>)HttpContext.RequestServices.GetService(typeof(DatabaseRepository<ClientMenuLink>));
+            //var categoryService = (DatabaseRepository<Category>)HttpContext.RequestServices.GetService(typeof(DatabaseRepository<Category>));
             //ViewBag.ShopCartCount = GetCountProductInShopCart();
-            //ViewBag.ClientMenuLinks = myCMLTable.GetAll().Where(g => g.IsDeleted != true).OrderByDescending(g => g.Id).ToList();
-            //ViewBag.Categories = myCategoryTable.GetAll().Where(g => g.IsDeleted != true && g.Parent == 0).ToList();
+            //ViewBag.ClientMenuLinks = clientMenuLinkService.GetAll().Where(g => g.IsDeleted != true).OrderByDescending(g => g.Id).ToList();
+            //ViewBag.Categories = categoryService.GetAll().Where(g => g.IsDeleted != true && g.Parent == 0).ToList();
         }
 
         public int GetCountProductInShopCart()

@@ -1,0 +1,422 @@
+﻿$colorPrimary: #3A7F0D;
+$colorSecondry: #8E4EEA;
+$colorYellow: #FFF573;
+$colorCream: #F4E4C1;
+$colorBlue: #080F5B;
+$colorWhite: #fff;
+
+
+@import url(client_section//fonts/Iran-sans/css/fontiran.css);
+
+@media only screen and (max-width: 992px) {
+    .languagepicker {
+        margin: auto !important;
+    }
+}
+
+#btnSubscribeNewsLetter {
+    position: absolute;
+    right: 0;
+    color: #fff;
+    font-size: 13px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    top: 0;
+    border: 0;
+    padding: 0 12px;
+    height: 40px;
+    line-height: 42px;
+    cursor: pointer;
+    -webkit-border-radius: 0 3px 3px 0;
+    -moz-border-radius: 0 3px 3px 0;
+    border-radius: 0 3px 3px 0;
+    background-color: #004dda;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+}
+
+.container_check input:checked ~ .checkmark {
+    background-color: $colorPrimary;
+}
+
+.container_radio .checkmark:after {
+    background-color: $colorPrimary;
+}
+
+.custom-search-input-2.inner input[type='submit'] {
+    background-color: $colorSecondry;
+
+    &:hover {
+        background-color: $colorBlue;
+    }
+}
+
+a.box_feat svg {
+    font-size: 70px;
+    font-size: 4.375rem;
+    color: $colorPrimary;
+    margin-bottom: 10px;
+}
+
+.hero_single.version_2 .wrapper h4 {
+    text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hero_single .wrapper h4 {
+    color: #fff;
+    margin: 0;
+    font-size: 35px;
+    font-size: 2.425rem;
+    font-weight: 600;
+}
+
+ul#top_menu li a.logout:before {
+    content: '\f2f5';
+}
+
+.header.mm-slideout.sticky ul#top_menu li a.logout {
+    color: #444;
+}
+
+ul#top_menu li a.logout {
+    text-indent: -9999px;
+    overflow: hidden;
+    display: block;
+    width: 22px;
+    height: 23px;
+    position: relative;
+    top: 8px;
+    -moz-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
+    -webkit-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+}
+
+ul#top_menu li a.logout:before {
+    font-family: 'Font Awesome 5 Pro';
+    font-size: 21px;
+    font-size: 1.3125rem;
+    text-indent: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: normal;
+    line-height: 1;
+}
+
+.languagepicker {
+    width: 110px;
+    border: 1px solid rgba(181,181,181,1);
+    background-color: #FFF;
+    display: inline-block;
+    padding: 0;
+    height: 33px;
+    overflow: hidden;
+    transition: all .3s ease;
+    margin: 2px 0 0;
+    vertical-align: top;
+
+    &:hover {
+        /* don't forget the 1px border */
+        height: 101px;
+    }
+
+    a {
+        color: #000;
+        font-size: small;
+        text-decoration: none;
+    }
+
+    li {
+        display: block !important;
+        width: 100%;
+        padding: 0px 10px;
+        line-height: 31px;
+        border-top: 1px solid #EEE;
+
+        &:hover {
+            background-color: #EEE;
+        }
+
+        img {
+            margin-right: 5px;
+        }
+    }
+}
+
+.languagepicker a:first-child li {
+    border: none;
+    background: #FFF !important;
+}
+
+.roundborders {
+    border-radius: 3px;
+}
+
+.large:hover {
+    height: 101px;
+}
+
+body, h1, h2, h3, h4, h5, h6, input, textarea, p, a, span, div, button, li, td, th {
+    font-family: IRANSans !important;
+}
+
+header.header.sticky, header.header_in {
+    height: 66px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: $colorBlue
+}
+
+.best-event-card {
+    border: 1px solid rgba(181,181,181,1);
+    border-radius: 5px;
+
+    .post_info {
+        padding: 0px 20px;
+    }
+}
+
+.best-comment-card {
+    border: 1px solid rgba(181,181,181,1);
+    border-radius: 5px;
+    padding: 20px;
+    background-image: url('img/Others/best comment.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 120px;
+    background-origin: content-box;
+
+    p {
+        margin-bottom: 10px;
+    }
+
+    .block-text {
+        color: white !important;
+        background-color: #004dda;
+        margin: 10px auto;
+        padding: 10px;
+    }
+}
+
+.call_section.pattern {
+    background-color: rgba(242,244,244,1);
+    background-image: none;
+
+    .wrapper {
+        background-color: transparent;
+    }
+}
+
+
+.main_title_3 span {
+    background-color: $colorSecondry;
+}
+
+.main_categories a img {
+    width: 60px;
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+a.btn_login {
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    color: #fff !important;
+    font-weight: 600;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    line-height: 1 !important;
+    padding: 10px 15px !important;
+    position: relative;
+    top: 2px;
+}
+
+.main-menu ul li a.active {
+    color: #FFC107;
+}
+
+@media only screen and (min-width: 992px) {
+    header.sticky .main-menu ul li span a.active {
+        color: #004dda;
+    }
+}
+/*#region color*/
+.color-primary {
+    color: $colorPrimary !important;
+}
+
+.color-secondry {
+    color: $colorSecondry !important;
+}
+
+.color-yellow {
+    color: $colorYellow !important;
+}
+
+.color-cream {
+    color: $colorCream !important;
+}
+
+.color-blue {
+    color: $colorBlue !important;
+}
+/*#endregion color*/
+/*#region bgColor*/
+.color-bg-primary {
+    background-color: $colorPrimary !important;
+}
+
+.color-bg-secondry {
+    background-color: $colorSecondry !important;
+}
+
+.color-bg-yellow {
+    background-color: $colorYellow !important;
+}
+
+.color-bg-cream {
+    background-color: $colorCream !important;
+}
+
+.color-bg-blue {
+    background-color: $colorBlue !important;
+}
+/*#endregion bgColor*/
+/*#region brColor*/
+.color-br-primary {
+    border-color: $colorPrimary !important;
+}
+
+.color-br-secondry {
+    border-color: $colorSecondry !important;
+}
+
+.color-br-yellow {
+    border-color: $colorYellow !important;
+}
+
+.color-br-cream {
+    border-color: $colorCream !important;
+}
+
+.color-br-blue {
+    border-color: $colorBlue !important;
+}
+/*#endregion brColor*/
+/*#region color:hover*/
+.color-primary-hover :hover {
+    color: $colorWhite !important;
+}
+
+.color-secondry-hover :hover {
+    color: $colorSecondry !important;
+}
+
+.color-yellow-hover :hover {
+    color: $colorYellow !important;
+}
+
+.color-cream-hover :hover {
+    color: $colorCream !important;
+}
+
+.color-blue-hover :hover {
+    color: $colorBlue !important;
+}
+/*#endregion color:hover*/
+/*#region bgColor-hover*/
+.color-bg-primary-hover :hover {
+    background-color: $colorPrimary !important;
+}
+
+.color-bg-secondry-hover :hover {
+    background-color: $colorSecondry !important;
+}
+
+.color-bg-yellow-hover :hover {
+    background-color: $colorYellow !important;
+}
+
+.color-bg-cream-hover :hover {
+    background-color: $colorCream !important;
+}
+
+.color-bg-blue-hover :hover {
+    background-color: $colorBlue !important;
+}
+/*#endregion color:hover*/
+/*#region brColor:hover*/
+.color-br-primary-hover :hover {
+    border-color: $colorPrimary !important;
+}
+
+.color-br-secondry-hover :hover {
+    border-color: $colorSecondry !important;
+}
+
+.color-br-yellow-hover :hover {
+    border-color: $colorYellow !important;
+}
+
+.color-br-cream-hover :hover {
+    border-color: $colorCream !important;
+}
+
+.color-br-blue-hover :hover {
+    border-color: $colorBlue !important;
+}
+/*#endregion color:hover*/
+/*#region btnColor*/
+.color-btn-primary {
+    color: $colorWhite !important;
+    background-color: $colorPrimary !important;
+
+    &:hover {
+        color: $colorBlue !important;
+        background-color: $colorYellow !important;
+    }
+}
+
+.color-btn-secondry {
+    color: $colorWhite !important;
+    background-color: $colorSecondry !important;
+
+    &:hover {
+        background-color: $colorBlue !important;
+    }
+}
+
+.color-btn-yellow {
+    color: $colorWhite !important;
+    background-color: $colorYellow !important;
+}
+
+.color-btn-cream {
+    color: $colorWhite !important;
+    background-color: $colorCream !important;
+}
+
+.color-btn-blue {
+    color: $colorWhite !important;
+    background-color: $colorBlue !important;
+}
+/*#endregion btnColor*/
+/*#region element*/
+a {
+    color: $colorBlue;
+}
+/*#endregion element*/
+

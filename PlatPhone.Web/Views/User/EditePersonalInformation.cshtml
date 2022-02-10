@@ -1,0 +1,94 @@
+﻿@model PlatPhone.DataLayer.User
+@{
+    ViewBag.Title = "تغییر اطلاعات کاربری";
+}
+
+<style>
+    @@media only screen and (max-width: 800) {
+        .timeline {
+            display: none !important;
+        }
+    }
+</style>
+<link href="client_section/Index.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="row profile">
+        <partial name="_UserSideBar"  model="Model"/>
+        <div class="col-md-9" dir="rtl">
+            <div class="profile-content personInfo">
+                <div class="form-horizontal">
+                    <form action="/User/EditePersonalInformation" method="post">
+                        <div class="col-lg-12 pull-right">
+                            <div class="form-group">
+                                <label for="UserName" class="col-lg-2 pull-right text-center">نام کاربری  </label>
+                                <div class="col-lg-12">
+                                    <input name="UserName" class="form-control name" value="@Model.UserName" id="UserName" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 pull-right">
+                            <div class="form-group">
+                                <label for="FirstName" class="col-lg-2 pull-right text-center">نام  </label>
+                                <div class="col-lg-12">
+                                    <input name="Name" class="form-control name" value="@Model.Name" id="Name" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 pull-right">
+                            <div class="form-group">
+                                <label for="LastName" class="col-lg-2 pull-right text-center">نام خانوادگی</label>
+                                <div class="col-lg-12">
+                                    <input name="Family" class="form-control name" value="@Model.Family" id="Family" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 pull-right">
+                            <div class="form-group">
+                                <label for="Email" class="col-lg-2 pull-right text-center">ایمیل</label>
+                                <div class="col-lg-12">
+                                    <input name="Email" class="form-control name" value="@Model.Email" id="Email" type="email">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 pull-right">
+                            <div class="form-group">
+                                <label for="HomePhone" class="col-lg-2 pull-right text-center">شماره همراه</label>
+                                <div class="col-lg-12">
+                                    <input name="Tell" class="form-control name" id="Tell" placeholder="09XXXXXXXXX" value="@Model.Tell" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 pull-right">
+                            <div class="form-group">
+                                <label for="postalCodeUser" class="col-lg-2 pull-right text-center">آدرس</label>
+                                <div class="col-lg-12">
+                                    <textarea class="form-control name" id="UserAddress" name="UserAddress">@Model.UserAddress</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 pull-right ">
+                            <div class="form-group" style="padding:4% 4% 4% 4%">
+                                <input type="submit" value="ذخیره" class="btn btn-info" style="border-radius:30px" />
+                            </div>
+                        </div>
+                        <input type="hidden" name="Id" value="@Model.Id" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+@*@section scripts{
+    <script src="~/Areas/Management/Library/Plugins/persian-date/persian-datepicker.js"></script>
+    <script src="~/Areas/Management/Library/Plugins/persian-date/persian-date.js"></script>
+    <script src="~/Areas/Management/Library/Plugins/file-input/fileinput.js"></script>
+    <script src="~/Library/Scripts/Angular/User/ProfileUserModule.js"></script>
+    <script src="~/Scripts/Angular/User/ProfileUserController.js"></script>
+    <script src="~/Library/Scripts/Angular/User/ProfileUserService.js"></script>
+    <script src="~/Areas/Management/Library/Scripts/Convertor/DateConvertor.js"></script>
+}*@

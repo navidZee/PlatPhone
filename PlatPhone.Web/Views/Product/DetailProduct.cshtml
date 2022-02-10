@@ -1,0 +1,97 @@
+﻿@using PlatPhone.Extention;
+@model Tuple<PlatPhone.DataLayer.Product, List<PlatPhone.DataLayer.Comment>, bool>
+
+@{
+    ViewBag.Title = "DetailProduct";
+}
+
+<main>
+    <div class="hero_in hotels_detail">
+        <div class="wrapper">
+            <span class="magnific-gallery">
+                <a href="client_section/img/gallery/hotel_list_2.jpg" class="btn_photos" title="Photo title" data-effect="mfp-zoom-in">View photos</a>
+                <a href="client_section/img/gallery/hotel_list_2.jpg" title="Photo title" data-effect="mfp-zoom-in"></a>
+                <a href="client_section/img/gallery/hotel_list_2.jpg" title="Photo title" data-effect="mfp-zoom-in"></a>
+            </span>
+        </div>
+    </div>
+    <!--/hero_in-->
+
+    <div class="container margin_60_35">
+        <div class="row">
+            <div class="col-lg-8">
+                <section style="padding:20px">
+                    <div class="detail_title_1">
+                        <h1>@Model.Item1.Name</h1>
+                        @*<a class="address" href="https://www.google.com/maps/dir//Assistance+%E2%80%93+H%C3%B4pitaux+De+Paris,+3+Avenue+Victoria,+75004+Paris,+Francia/48.8606548,2.3348734,14z/data=!4m15!1m6!3m5!1s0x47e66e1de36f4147:0xb6615b4092e0351f!2sAssistance+Publique+-+H%C3%B4pitaux+de+Paris+(AP-HP)+-+Si%C3%A8ge!8m2!3d48.8568376!4d2.3504305!4m7!1m0!1m5!1m1!1s0x47e67031f8c20147:0xa6a9af76b1e2d899!2m2!1d2.3504327!2d48.8568361">438 Rush Green Road, Romford</a>*@
+                    </div>
+
+                    <p>@Model.Item1.Description</p>
+                    <br />
+
+                    <button onclick="AddToCart(@Model.Item1.Id)" style="margin-top: 50px;" class="btn btn-info"> افزودن به سبد خرید</button>
+                </section>
+            </div>
+            <div class="col-md-4">
+                <img style="width: 100%" src="Image/Uploade/ProductImage/@Model.Item1.ImageUrl" alt="@Model.Item1.Name" />
+            </div>
+        </div>
+        <hr>
+        <div class="reviews-container">
+            @foreach (var item in Model.Item2)
+            {
+                <!-- /review-box -->
+                <div class="review-box clearfix">
+                    <figure class="rev-thumb">
+                        <img src="Image/icon-user-default.png" alt="">
+                    </figure>
+                    <div class="rev-content">
+                        <div class="rev-info">
+                            @item.Name - @item.CreateDate.ToShamsi()
+                        </div>
+                        <div class="rev-text">
+                            <p>
+                                @item.Text
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="add-review">
+            <h5>نظر بدهید</h5>
+            <form method="post" action="/product/registerComment?productId=@Model.Item1.Id">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>نام و نام خانوادگی *</label>
+                        <input required="required" type="text" name="Name" id="Name" placeholder="" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>ایمیل *</label>
+                        <input required="required" type="email" name="Email" id="Email" class="form-control">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>نظر</label>
+                        <textarea required="required" name="Text" id="Text" class="form-control" style="height:130px;"></textarea>
+                    </div>
+                    <div class="form-group col-md-12 add_top_20 add_bottom_30">
+                        <span>@ViewBag.data</span>
+                        <input type="submit" value="تایید" class="btn_1" id="submit-review">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</main>
+
+@if (Model.Item3)
+{
+    @section Scripts{
+
+        <script>
+            Swal.fire("نظر شما با موفقیت ثبت شد و پس از تایید مدیریت در سایت نمایش داده میشود");
+        </script>
+    }
+}
