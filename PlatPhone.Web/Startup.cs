@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PlatPhone.DataLayer.Context;
+using PlatPhone.DataLayer.Service;
 
 namespace PlatPhone.Web
 {
@@ -22,6 +23,7 @@ namespace PlatPhone.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSingleton(typeof(DatabaseRepository<>), typeof(DatabaseRepository<>));
             services.AddDbContext<ApplicationContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("PlatPhoneContext"));
