@@ -12,7 +12,6 @@ namespace FloristStore.Models.ViewModel.ShopCart
         public decimal Price { get; set; }
         public decimal Sal { get; set; }
         public ProductListViewModel Product { get; set; }
-        public int Status { get; set; }
- 
+        public int Status { get; set; } 
     }
 }

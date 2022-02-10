@@ -23,11 +23,12 @@ namespace PlatPhone.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSingleton(typeof(DatabaseRepository<>), typeof(DatabaseRepository<>));
+            services.AddScoped(typeof(DatabaseRepository<>), typeof(DatabaseRepository<>));
             services.AddDbContext<ApplicationContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("PlatPhoneContext"));
             });
+            services.AddSession();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
