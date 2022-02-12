@@ -31,7 +31,7 @@ namespace PlatPhone.Controllers
             if (keyWord != null && keyWord != "")
                 Products = Products.Where(g => g.Name.Contains(keyWord));
 
-            return View(model: Products/*.OrderBy(g => g.Id).Skip(skip).Take(15)*/.ToList());
+            return View(model: Products.Include(d=>d.Category)/*.OrderBy(g => g.Id).Skip(skip).Take(15)*/.ToList());
         }
         public IActionResult DetailProduct(int? id)
         {

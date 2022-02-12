@@ -37,6 +37,5 @@ namespace PlatPhone.Controllers
                 return Redirect("/News/ListNews");
             return View(News.Where(g => g.Id == id).FirstOrDefault());
         }
-
     }
 }

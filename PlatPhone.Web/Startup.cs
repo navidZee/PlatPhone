@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,6 +30,11 @@ namespace PlatPhone.Web
                 options.UseSqlServer(Configuration.GetConnectionString("PlatPhoneContext"));
             });
             services.AddSession();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                        .AddCookie(options =>
+                        {
+                            options.LoginPath = "/Account/Login";
+                        });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

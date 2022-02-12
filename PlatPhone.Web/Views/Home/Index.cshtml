@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Home";
+    Layout = "_Layout";
 }
 
 <partial name="_Header" model="Model.ClientMenuLinks" />
@@ -51,7 +52,7 @@
                 {
                     <li>
                         <a href="/Product/ListProduct?Groups=@item.Id&Address=&keyWord=">
-                            <img src="Image/Uploade/CatrgoryImage/@item.ImgName" alt="@item.Name" />
+                            <img src="/Image/Uploade/CatrgoryImage/@item.ImgName" alt="@item.Name" />
                             <h3>@item.Name</h3>
                         </a>
                     </li>
@@ -77,7 +78,7 @@
                 <div class="col-lg-3 col-sm-6">
                     <a href="/Product/DetailProduct/@item.Id" title="@item.Description" class="grid_item small">
                         <figure>
-                            <img src="Image/Uploade/ProductImage/@item.ImageUrl" alt="@item.Name">
+                            <img src="/Image/Uploade/ProductImage/@item.ImageUrl" alt="@item.Name">
                             <div class="info">
                                 <div class="cat_star">
                                     @if (item.Discount > 0)
@@ -116,7 +117,7 @@
                 <div class="col-lg-3 col-sm-6">
                     <a href="/Product/DetailProduct/@item.Id" title="@item.Description" class="grid_item small">
                         <figure>
-                            <img src="Image/Uploade/ProductImage/@item.ImageUrl" alt="@item.Name" />
+                            <img src="/Image/Uploade/ProductImage/@item.ImageUrl" alt="@item.Name" />
                             <div class="info">
                                 <div class="cat_star">
                                     @{ decimal discount = (item.Price * item.Discount) / 100;
@@ -146,7 +147,7 @@
                     <div class="col-lg-3 col-sm-6">
                         <a href="/News/DetailNews/@item.Id" title="@item.Title" class="grid_item small">
                             <figure>
-                                <img src="Image/Uploade/NewsImage/@item.Image" alt="News">
+                                <img src="/Image/Uploade/NewsImage/@item.Image" alt="News">
                                 <div class="info">
                                     <h3>@item.Title</h3>
                                 </div>
@@ -171,7 +172,7 @@
                     {
                         <div class="col-lg-3 col-md-6">
                             <a href="/Product/ListProduct?Groups=@item.Id&Address=&keyWord=" class="box_cat_home">
-                                <img src="Image/Uploade/CatrgoryImage/@item.ImgName" width="65" height="65" alt="@item.Name">
+                                <img src="/Image/Uploade/CatrgoryImage/@item.ImgName" width="65" height="65" alt="@item.Name">
                                 <h3>@item.Name</h3>
                             </a>
                         </div>
@@ -188,5 +189,5 @@
 </main>
 
 @section Scripts{
-    <script src="Script/Search/Search.js"></script>
+    <script src="/Script/Search/Search.js"></script>
 }
