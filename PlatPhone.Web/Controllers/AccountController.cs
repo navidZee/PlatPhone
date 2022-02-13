@@ -38,6 +38,7 @@ namespace PlatPhone.Controllers
             }
             return View();
         }
+
         public PartialViewResult Signupuser() => PartialView("_Signup");
 
         [HttpPost]
@@ -78,7 +79,7 @@ namespace PlatPhone.Controllers
         {
             var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Email, Email)
+                        new Claim("Email", Email)
                     };
 
             ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");

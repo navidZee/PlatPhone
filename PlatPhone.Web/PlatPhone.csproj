@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\ShopCartController.cs" />
-    <Compile Remove="Controllers\UserController.cs" />
   </ItemGroup>
 
   <ItemGroup>
