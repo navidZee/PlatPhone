@@ -23,12 +23,11 @@ namespace PlatPhone.Extention
             int remainder = result % 11;
             return check == (remainder < 2 ? remainder : 11 - remainder);
         }
-
-        //public static HttpStatusCode ValidatorFile(IFormFile File, params string[] Type)
-        //{          
-        //    if ((File.ContentLength / 1024 / 1024) > 2 || !Type.Contains(File.ContentType))
-        //        return HttpStatusCode.NotAcceptable;
-        //    return HttpStatusCode.OK;
-        //}
+        public static HttpStatusCode ValidatorFile(IFormFile File, int MaxSize, params string[] Type)
+        {
+            if ((File.Length / 1024 / 1024) > 2 || !Type.Contains(File.ContentType))
+                return HttpStatusCode.NotAcceptable;
+            return HttpStatusCode.OK;
+        }
     }
 }

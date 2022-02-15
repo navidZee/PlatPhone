@@ -1,21 +1,14 @@
-﻿
-
-@model List<DataLayer.InvoiceHeader>
+﻿@model List<PlatPhone.DataLayer.InvoiceHeader>
 @{
     int i = 1;
 }
 
-
 <div class="row">
     <div class="col-lg-12">
-        <!--panel 2-->
         <section class="panel">
-
             <section class="Panel_Withe_Body row" style="margin:7px 2px 2px 0;">
                 <br />
-
                 <table class="table table-condensed table-hover" style="border-radius: 0 0 10px 10px">
-
                     <tr>
                         <td class="font-weight-bold">#</td>
                         <td>کد فاکتور</td>
@@ -30,7 +23,7 @@
 
                     @foreach (var item in Model)
                     {
-                        <tr class="@(item.Checkout == DataLayer.Enum.Checkout.ok?"success":"")">
+                        <tr class="@(item.Checkout == PlatPhone.DataLayer.Enum.Checkout.ok?"success":"")">
 
                             <td>@i</td>
                             <td>@item.FactorCode </td>
@@ -38,40 +31,27 @@
 
                             <td>@item.User.Name @item.User.Family </td>
                             <td>
-                                <span class="badge bg-@(item.RequestLevel==DataLayer.Enum.RequestLevel.delivered?"success":item.RequestLevel==DataLayer.Enum.RequestLevel.Rejectd?"warning":item.RequestLevel==DataLayer.Enum.RequestLevel.Sending?"info":"important")">
-                                    @FloristStore.Extention.EnumExtention.GetDescription(item.RequestLevel)
+                                <span class="badge bg-@(item.RequestLevel==PlatPhone.DataLayer.Enum.RequestLevel.delivered?"success":item.RequestLevel==PlatPhone.DataLayer.Enum.RequestLevel.Rejectd?"warning":item.RequestLevel==PlatPhone.DataLayer.Enum.RequestLevel.Sending?"info":"important")">
+                                    @PlatPhone.Extention.EnumExtention.GetDescription(item.RequestLevel)
                                 </span>
                             </td>
 
-
-                            <td>@item.Store.ShopName</td>
-
+                            <td>پلتفون</td>
 
                             <td>
                                 <a onclick="DetailReportSal(@item.Id)" class="btn btn-warning  btn-xs" data-toggle="modal" data-target="#BasicModal"><i class="icon-eye-open"></i></a>
                             </td>
 
-                            <td >
-                                
-                               <button  onclick="Checkout(@item.Id)" class="btn btn-xs btn-block btn-primary @(item.Checkout == DataLayer.Enum.Checkout.ok?"success":"danger")">@(item.Checkout == DataLayer.Enum.Checkout.ok ? "تسویه شده" : "عدم تسویه ") </button>
-
-
-      
-
+                            <td>                                
+                               <button  onclick="Checkout(@item.Id)" class="btn btn-xs btn-block btn-primary @(item.Checkout == PlatPhone.DataLayer.Enum.Checkout.ok?"success":"danger")">@(item.Checkout == PlatPhone.DataLayer.Enum.Checkout.ok ? "تسویه شده" : "عدم تسویه ") </button>      
                             </td>
 
                         </tr>
                         i = i + 1;
                     }
 
-
-
-
                 </table>
-
-
             </section>
         </section>
     </div>
 </div>
-

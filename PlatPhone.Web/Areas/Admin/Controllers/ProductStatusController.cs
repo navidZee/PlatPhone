@@ -1,66 +1,69 @@
-﻿using FloristStore.Providers;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using PlatPhone.Auth;
+using PlatPhone.DataLayer;
+using PlatPhone.DataLayer.Enum;
+using PlatPhone.DataLayer.Service;
+using PlatPhone.Providers;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using DataLayer;
-using DataLayer.Service;
-using DataLayer.Enum;
 using System.Net;
-using FloristStore.Auth;
 
-namespace FloristStore.Areas.Admin.Controllers
+namespace PlatPhone.Areas.Admin.Controllers
 {
     [SessionAuthorize(true, RoleEnum.Admin)]
-    public class ProductStatusController : Controller
+    public class ProductStatusController : BaseController
     {
-        DatabaseRepository<InvoiceHeader> MyInvice = new DatabaseRepository<InvoiceHeader>(new EF());
-        DatabaseRepository<Product> productTable = new DatabaseRepository<Product>(new EF());
-        DatabaseRepository<User> User = new DatabaseRepository<User>(new EF());
+        private DatabaseRepository<InvoiceHeader> invoiceService;
+        private DatabaseRepository<Product> productService;
+        private DatabaseRepository<User> userService;
 
-        public ActionResult Index()
+        public ProductStatusController(DatabaseRepository<InvoiceHeader> invoiceService,
+            DatabaseRepository<Product> productService,DatabaseRepository<User> userService)
+        {
+            this.invoiceService = invoiceService;
+            this.productService = productService;
+            this.userService = userService;
+        }
+
+        public IActionResult Index()
         {
             return View();
         }
 
         public PartialViewResult ListProductStatus()
         {
-            IQueryable<InvoiceHeader> invoiceHeaders = MyInvice.GetAll().Where(g => g.IsFinaly);
+            IQueryable<InvoiceHeader> invoiceHeaders = invoiceService.GetAll().Where(g => g.IsFinaly);
 
-            string email = Session["USER"] as string;
-
-            User user = User.GetAll().Where(g => g.Email == email).FirstOrDefault();
+            User user = userService.GetAll().Where(g => g.Email == UserEmail).FirstOrDefault();
 
             return PartialView($"{StatcPath.PartialViewPath}ProductStatus/_ListProductStatus.cshtml", invoiceHeaders.ToList());
         }
 
-
         public HttpStatusCode SuccssProductStatus(int id)
         {
-            var x = MyInvice.Read(id);
+            var x = invoiceService.Read(id);
             x.RequestLevel = RequestLevel.delivered;
-            MyInvice.Update(x);
-            MyInvice.Save();
+            invoiceService.Update(x);
+            invoiceService.Save();
             return HttpStatusCode.OK;
         }
-
 
         public HttpStatusCode RejectdProductStatus(int id)
         {
-            var x = MyInvice.Read(id);
+            var x = invoiceService.Read(id);
             x.RequestLevel = RequestLevel.Rejectd;
-            MyInvice.Update(x);
-            MyInvice.Save();
+            invoiceService.Update(x);
+            invoiceService.Save();
             return HttpStatusCode.OK;
         }
+
         public HttpStatusCode SendingProductStatus(int id)
         {
-            var x = MyInvice.Read(id);
+            var x = invoiceService.Read(id);
             x.RequestLevel = RequestLevel.Sending;
-            MyInvice.Update(x);
-            MyInvice.Save();
+            invoiceService.Update(x);
+            invoiceService.Save();
             return HttpStatusCode.OK;
         }
+
     }
 }

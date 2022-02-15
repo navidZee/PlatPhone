@@ -1,21 +1,15 @@
-﻿@model List<DataLayer.SiteConfiguration>
+﻿@model List<PlatPhone.DataLayer.SiteConfiguration>
 @{
-    /**/
-
     ViewBag.Title = "Index";
 }
 
-
 <div class="row">
     <div class="col-lg-12">
-        <!--panel 2-->
         <section class="panel">
-
             <section class="Panel_Withe_Body row" style="margin:7px 2px 2px 0;">
                 <div class="row">
                     <div class="col-md-2" style="margin-bottom:8px">
                         تظیمات درگاه ریزن پال
-
                     </div>
                 </div>
                 <div class="row">
@@ -23,7 +17,7 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">عنوان سایت در درگاه</label>
                             <div class="col-lg-4">
-                                <input type="text" @*style="margin-top: 15px;"*@ id="siteTitle" name="siteTitle" value='@Model.Where(g => g.Key == "TitleZarinPal").FirstOrDefault().Value' class="form-control" />
+                                <input type="text" id="siteTitle" name="siteTitle" value='@Model.Where(g => g.Key == "TitleZarinPal").FirstOrDefault().Value' class="form-control" />
                             </div>
 
                             <label class="col-lg-2 control-label">مرچن کد وصل شدن به درگاه</label>
@@ -37,11 +31,8 @@
                                 <input type="text" id="siteEmail" style="margin-top: 15px;" value='@Model.Where(g => g.Key == "EmailZarinPal").FirstOrDefault().Value' class="form-control form-control-file" />
                             </div>
                         </div>
-
-
                         <input type="button" class="btn btn-info " onclick="sendInfo()" value="ذخیره" style="float: left;margin-top: 15px;margin-left: 16px;" />
                     </form>
-
                 </div>
             </section>
         </section>
@@ -65,12 +56,9 @@
 
                     if (result == "OK") {
                         alertOK();
-
                     }
-                }, error: function () {
 
-                }
-
+                }, error: function () {}
             });
         }
     </script>

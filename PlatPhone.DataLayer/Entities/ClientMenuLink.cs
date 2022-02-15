@@ -7,6 +7,7 @@ namespace PlatPhone.DataLayer
     public class ClientMenuLink : PublicAllTable
     {
         public string Title { get; set; }
+        
         public string Content { get; set; }
     }
 }

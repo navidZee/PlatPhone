@@ -57,11 +57,13 @@ namespace PlatPhone.Web
 
             app.UseSession();
 
-            app.UseEndpoints(endpoints =>
+            app.UseEndpoints(routes =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapControllerRoute(                    
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"                                       
+                );
+                routes.MapControllerRoute("Default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

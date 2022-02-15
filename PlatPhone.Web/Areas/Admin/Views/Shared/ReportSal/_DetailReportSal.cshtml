@@ -1,6 +1,6 @@
-﻿@model List<DataLayer.InvoiceDetail>
+﻿@model List<PlatPhone.DataLayer.InvoiceDetail>
 @{
-    int i = 1;
+    
 }
 
 <div class="container ">
@@ -17,7 +17,6 @@
                 <td>عنوان محصول</td>
                 <td>تعداد</td>
                 <td>فی</td>
-
                 <td>جمع</td>
             </tr>
 
@@ -29,10 +28,8 @@
 
                     <td>@item.Product.Price</td>
 
-                    <td>@(item.Product.Price * (int)item.Count)</td>
-                    
+                    <td>@(item.Product.Price * (int)item.Count)</td>                    
                 </tr>
-
             }
         </table>
     </div>

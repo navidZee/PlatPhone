@@ -1,15 +1,11 @@
-﻿@model List<DataLayer.Category>
+﻿@model List<PlatPhone.DataLayer.Category>
 @{
     int i = 1;
 }
 
-
-
 <div class="row">
     <div class="col-lg-12">
-        <!--panel 2-->
         <section class="panel">
-
             <section class="Panel_Withe_Body row" style="margin:7px 2px 2px 0;">
                 <div class="row">
                     <div class="col-md-2" style="margin-bottom:8px">
@@ -24,7 +20,6 @@
                         <br />
                     </div>
                     <table class="table table-condensed table-hover " style="border-radius: 0 0 10px 10px">
-
                         <tr>
                             <td class="font-weight-bold ">#</td>
                             <td>نام دسته </td>
@@ -36,23 +31,17 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-
                                     <td>@i</td>
-
                                     <td>
                                         @item.Name
                                     </td>
                                     <td>
-                                        <img src="/www/Image/Uploade/CatrgoryImage/@item.ImgName" style="width:150px;height:100px" />
-
+                                        <img src="/Image/Uploade/CatrgoryImage/@item.ImgName" style="width:150px;height:100px" />
                                     </td>
-
                                     <td>
                                         <a onclick="confirmdelete(@item.Id)" class="btn btn-danger detailBtn btn-xs" data-toggle="modal" data-target="#modal-trash"><i class="icon-trash"></i></a>
                                     </td>
-
                                 </tr>
-
                                 i += 1;
                             }
 

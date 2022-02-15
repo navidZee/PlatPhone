@@ -1,32 +1,36 @@
-﻿using DataLayer;
-using DataLayer.Service;
-using FloristStore.Providers;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using PlatPhone.DataLayer;
+using PlatPhone.DataLayer.Context;
+using PlatPhone.DataLayer.Service;
+using PlatPhone.Providers;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
 
-namespace FloristStore.Areas.Admin.Controllers
+namespace PlatPhone.Areas.Admin.Controllers
 {
-    public class CommentController : Controller
+    public class CommentController : BaseController
     {
-        DatabaseRepository<Comment> Comment = new DatabaseRepository<Comment>(new EF());
-        EF ef = new EF();
+        private DatabaseRepository<Comment> commentService;
+        private ApplicationContext context;
 
+        public CommentController(DatabaseRepository<Comment> commentService,
+            ApplicationContext context)
+        {
+            this.commentService = commentService;
+            this.context = context;
+        }
 
-        // GET: Admin/Comment
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
         public PartialViewResult ListComments()
         {          
-            return PartialView($"{StatcPath.PartialViewPath}Comments/_ListComments.cshtml", Comment.GetAll().Where(g => !g.IsConfirmed && g.IsRejected == false).ToList());
+            return PartialView($"{StatcPath.PartialViewPath}Comments/_ListComments.cshtml", commentService.GetAll().Where(g => !g.IsConfirmed && g.IsRejected == false).ToList());
 
         }
+
         public ActionResult IndexContactUs()
         {
             return View();
@@ -34,27 +38,26 @@ namespace FloristStore.Areas.Admin.Controllers
 
         public PartialViewResult ListContactUs()
         {
-            return PartialView($"{StatcPath.PartialViewPath}Comments/_ListContactUs.cshtml", ef.ContactUs.ToList());
+            return PartialView($"{StatcPath.PartialViewPath}Comments/_ListContactUs.cshtml", context.ContactUs.ToList());
 
         }
 
         public HttpStatusCode SuccssProductStatus(int id)
         {
-            var x = Comment.Read(id);
+            var x = commentService.Read(id);
             x.IsConfirmed = true;
-            Comment.Update(x);
-            Comment.Save();
+            commentService.Update(x);
+            commentService.Save();
             return HttpStatusCode.OK;
         }
 
-
         public HttpStatusCode RejectdProductStatus(int id)
         {
-            var x = Comment.Read(id);
+            var x = commentService.Read(id);
             x.IsConfirmed = true;
             x.IsRejected = true;
-            Comment.Update(x);
-            Comment.Save();
+            commentService.Update(x);
+            commentService.Save();
             return HttpStatusCode.OK;
         }
 

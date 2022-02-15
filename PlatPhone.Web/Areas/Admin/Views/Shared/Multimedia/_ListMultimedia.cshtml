@@ -1,16 +1,9 @@
-﻿@model List<DataLayer.Multimedia>
-@using DataLayer.Enum
-@{
-    int i = 1;
-}
-
+﻿@model List<PlatPhone.DataLayer.Multimedia>
+@using PlatPhone.DataLayer.Enum
 
 <div class="row">
     <div class="col-lg-12">
-        <!--panel 2-->
         <section class="panel">
-
-            <!--tab nav start-->
             <section class="panel">
                 <header class="panel-heading tab-bg-dark-navy-blue ">
                     <ul class="nav nav-tabs">
@@ -36,9 +29,8 @@
                                 </div>
                             </section>
 
-
                             <div class="row">
-                                @foreach (var item in Model.Where(g => g.MultimediaType == DataLayer.MultimediaType.Image))
+                                @foreach (var item in Model.Where(g => g.MultimediaType == PlatPhone.DataLayer.MultimediaType.Image))
                                 {
                                     <div class="col-md-4 ">
                                         <div class="container">
@@ -50,12 +42,10 @@
                                         </div>
                                     </div>
                                 }
-
                             </div>
-
                         </div>
-                        <div id="about" class="tab-pane">
 
+                        <div id="about" class="tab-pane">
                             <section class=" row" style="margin:7px 2px 2px 0;">
                                 <div class="row">
                                     <div class="col-md-2">
@@ -66,8 +56,7 @@
                                 </div>
                             </section>
                             <div class="row">
-
-                                @foreach (var item in Model.Where(g => g.MultimediaType == DataLayer.MultimediaType.Video))
+                                @foreach (var item in Model.Where(g => g.MultimediaType == PlatPhone.DataLayer.MultimediaType.Video))
                                 {
                                     <div class="col-md-4">
                                         <div class="container">
@@ -81,14 +70,11 @@
                                         </div>
                                     </div>
                                 }
-
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            <!--tab nav start-->
-
         </section>
     </div>
 </div>

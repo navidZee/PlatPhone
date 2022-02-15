@@ -1,8 +1,8 @@
-﻿@using DataLayer.Enum;
+﻿@using PlatPhone.DataLayer.Enum;
+@using PlatPhone.DataLayer;
 @{
-    string email = Session["USER"] as string;
-    DataLayer.EF eF = new DataLayer.EF();
-    DataLayer.Enum.RoleEnum userRole = eF.Users.Where(g => g.Email == email).Select(g => g.Role).FirstOrDefault();
+    string email = "";
+    //RoleEnum userRole = eF.Users.Where(g => g.Email == email).Select(g => g.Role).FirstOrDefault();
 }
 <aside>
     <div id="sidebar" class="nav-collapse ">
@@ -14,8 +14,8 @@
                     <span>داشبورد</span>
                 </a>
             </li>
-            @if (userRole == RoleEnum.Admin)
-            {
+            @*@if (userRole == RoleEnum.Admin)
+            {*@
                 <li class="sub-menu">
                     <a href="javascript:;" class="">
                         <i class="icon-book"></i>
@@ -32,7 +32,7 @@
                         <li><a href="/Admin/Comment/IndexContactUs">ارتباط با ما </a></li>
                     </ul>
                 </li>
-            }
+        @*    }*@
         </ul>
     </div>
 </aside>

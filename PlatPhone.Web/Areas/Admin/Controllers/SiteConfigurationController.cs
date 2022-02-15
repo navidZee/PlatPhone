@@ -1,38 +1,39 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using PlatPhone.Auth;
+using PlatPhone.DataLayer;
+using PlatPhone.DataLayer.Enum;
+using PlatPhone.DataLayer.Service;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Data.Entity;
-using DataLayer;
-using DataLayer.Service;
-using FloristStore.Providers;
-using DataLayer.Enum;
-using FloristStore.Auth;
 using System.Net;
 
-namespace FloristStore.Areas.Admin.Controllers
+namespace PlatPhone.Areas.Admin.Controllers
 {
-
     [SessionAuthorize(true, RoleEnum.Admin)]
-    public class SiteConfigurationController : Controller
+    public class SiteConfigurationController : BaseController
     {
-        DatabaseRepository<SiteConfiguration> siteConfigurationTable = new DatabaseRepository<SiteConfiguration>(new EF());
-        // GET: Admin/StoreProfile
-        public ActionResult Index() => View(siteConfigurationTable.Read());
+        DatabaseRepository<SiteConfiguration> siteConfigurationService;
+
+        public SiteConfigurationController(DatabaseRepository<SiteConfiguration> siteConfigurationService)
+        {
+            this.siteConfigurationService = siteConfigurationService;
+        }
+
+        public IActionResult Index() => View(siteConfigurationService.Read());
         public HttpStatusCode PostSiteConfiguration(List<SiteConfiguration> siteConfigurations)
         {
             if (siteConfigurations.Count() > 0)
             {
                 foreach (var item in siteConfigurations)
                 {                   
-                        var x = siteConfigurationTable.GetAll().Where(g => g.Key == item.Key).FirstOrDefault();
+                        var x = siteConfigurationService.GetAll().Where(g => g.Key == item.Key).FirstOrDefault();
                         x.Value = item.Value;
-                        siteConfigurationTable.Save();              
+                        siteConfigurationService.Save();              
                 }
             }
 
             return HttpStatusCode.OK;
         }
+
     }
 }

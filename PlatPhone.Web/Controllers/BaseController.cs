@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PlatPhone.DataLayer;
 using PlatPhone.DataLayer.Service;
+using System.Linq;
+using System.Security.Claims;
 
 namespace PlatPhone.Controllers
 {
-
+    [Area("Admin")]
     public class BaseController : Controller
     {
         private DatabaseRepository<Category> categoryService;
@@ -26,6 +28,8 @@ namespace PlatPhone.Controllers
             //    return 0;
             //return (Session["ShopCart"] as List<ShopCartViewModel>).Sum(p => p.Count);
         }
+
+        public string UserEmail { get => User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value; }
 
     }
 }

@@ -1,5 +1,4 @@
-﻿
-@model Tuple<DataLayer.Product, List<DataLayer.Category>>
+﻿@model Tuple<PlatPhone.DataLayer.Product, List<PlatPhone.DataLayer.Category>>
 
 @section Scripts{
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -33,6 +32,7 @@
         });
     </script>
 }
+
 @section Header{
     <style type="text/css">
         #dvPreview {
@@ -132,7 +132,7 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label"> عکس محصول</label>
                         <div class="col-lg-10">
-                            <img src="@("/www/Image/Uploade/ProductImage/"+Model.Item1.ImageUrl)" style="width:200px" alt="عکس محصول پیدا نشد" />
+                            <img src="@("/Image/Uploade/ProductImage/"+Model.Item1.ImageUrl)" style="width:200px" alt="عکس محصول پیدا نشد" />
                         </div>
                     </div>
                     <input type="button" onclick="UpdatePrice()" style="float:left" class=" btn btn-danger" value="تایید" />

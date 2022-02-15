@@ -1,50 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using PlatPhone.Auth;
+using PlatPhone.DataLayer;
+using PlatPhone.DataLayer.Enum;
+using PlatPhone.DataLayer.Service;
+using PlatPhone.Providers;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using DataLayer;
-using DataLayer.Enum;
-using DataLayer.Service;
-using FloristStore.Auth;
-using FloristStore.Models.Dtos;
-using FloristStore.Providers;
 
-namespace FloristStore.Areas.Admin.Controllers
+namespace PlatPhone.Areas.Admin.Controllers
 {
     [SessionAuthorize(true, RoleEnum.Admin)]
-    public class ClientMenuLinkController : Controller
+    public class ClientMenuLinkController : BaseController
     {
-        DatabaseRepository<ClientMenuLink> CMLTable = new DatabaseRepository<ClientMenuLink>(new EF());
+        private DatabaseRepository<ClientMenuLink> clientMenuLinkService;
+        public ClientMenuLinkController(DatabaseRepository<ClientMenuLink> clientMenuLinkService)
+        {
+            this.clientMenuLinkService = clientMenuLinkService;
+        }
+
         // GET: Admin/ClientMenuLink
-        public ActionResult Index() => View();
-        public PartialViewResult GetListCML() => PartialView($"{StatcPath.PartialViewPath}ClientMenuLink/_ListCML.cshtml", CMLTable.GetAll().Where(g => !g.IsDeleted).ToList());
+        public IActionResult Index() => View();
+        public PartialViewResult GetListCML() => PartialView($"{StatcPath.PartialViewPath}ClientMenuLink/_ListCML.cshtml", clientMenuLinkService.GetAll().Where(g => !g.IsDeleted).ToList());
         public PartialViewResult GetAddCML() => PartialView($"{StatcPath.PartialViewPath}ClientMenuLink/_AddCML.cshtml");
-        public PartialViewResult GetEditCML(int id) => PartialView($"{StatcPath.PartialViewPath}ClientMenuLink/_EditCML.cshtml", CMLTable.Read(id));
-        public PartialViewResult GetDisplayCML(int id) => PartialView($"{StatcPath.PartialViewPath}ClientMenuLink/_DisplayCML.cshtml", CMLTable.Read(id));
+        public PartialViewResult GetEditCML(int id) => PartialView($"{StatcPath.PartialViewPath}ClientMenuLink/_EditCML.cshtml", clientMenuLinkService.Read(id));
+        public PartialViewResult GetDisplayCML(int id) => PartialView($"{StatcPath.PartialViewPath}ClientMenuLink/_DisplayCML.cshtml", clientMenuLinkService.Read(id));
         public HttpStatusCode ConfirmDelete(int id)
         {
-            var x = CMLTable.Read(id);
+            var x = clientMenuLinkService.Read(id);
             x.IsDeleted = true;
-            CMLTable.Update(x);
-            CMLTable.Save();
+            clientMenuLinkService.Update(x);
+            clientMenuLinkService.Save();
             return HttpStatusCode.OK;
         }
-        [ValidateInput(false)]
+
+        //[ValidateInput(false)]
         public HttpStatusCode Operation(ClientMenuLink cml)
         {
-            if (Session["USER"] == null)
-                return HttpStatusCode.Unauthorized;
             if (cml.Id==0)
             {
-                CMLTable.Create(cml);
-                CMLTable.Save();
+                clientMenuLinkService.Create(cml);
+                clientMenuLinkService.Save();
             }
             else
             {
-                CMLTable.Update(cml);
-                ViewBag.msg = CMLTable.Save();
+                clientMenuLinkService.Update(cml);
+                ViewBag.msg = clientMenuLinkService.Save();
                 return HttpStatusCode.OK;
             }
             return HttpStatusCode.OK;

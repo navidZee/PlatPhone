@@ -1,4 +1,11 @@
-﻿namespace PlatPhone.Models.ViewModel
+﻿using PlatPhone.Models.ViewModel.ShopCart;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PlatPhone.Models.ViewModel
 {
     public class ShopCartViewModel 
     {

@@ -1,22 +1,13 @@
-﻿using DataLayer;
-using DataLayer.Service;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Security.Claims;
 
-namespace FloristStore.Areas.Admin.Controllers
+namespace PlatPhone.Areas.Admin.Controllers
 {
     public class BaseController : Controller
     {
-        DatabaseRepository<User> uerTable = new DatabaseRepository<User>(new EF());
+        public string UserEmail { get=> User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value; }
 
-        protected new readonly User User;
-        public BaseController()
-        {
-            
-
-        }
     }
 }

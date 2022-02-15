@@ -1,52 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using PlatPhone.Auth;
+using PlatPhone.DataLayer;
+using PlatPhone.DataLayer.Enum;
+using PlatPhone.DataLayer.Service;
+using PlatPhone.Providers;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using DataLayer;
-using DataLayer.Enum;
-using DataLayer.Service;
-using FloristStore.Auth;
-using FloristStore.Providers;
-using System.Data.Entity;
 using System.Net;
 
-namespace FloristStore.Areas.Admin.Controllers
+namespace PlatPhone.Areas.Admin.Controllers
 {
     [SessionAuthorize(true, RoleEnum.Admin)]
-    public class ReportSalController : Controller
+    public class ReportSalController : BaseController
     {
-        DatabaseRepository<InvoiceHeader> MyInvoic = new DatabaseRepository<InvoiceHeader>(new EF());
-        DatabaseRepository<InvoiceDetail> MyInvoicDetail = new DatabaseRepository<InvoiceDetail>(new EF());
-        DatabaseRepository<User> User = new DatabaseRepository<User>(new EF());
+        private DatabaseRepository<InvoiceHeader> invoiceHeaderService;
+        private DatabaseRepository<InvoiceDetail> invoicDetailService;
+        private DatabaseRepository<User> userService;
+
+        public ReportSalController(DatabaseRepository<InvoiceHeader> invoiceHeaderService,
+            DatabaseRepository<InvoiceDetail> invoicDetailService,
+            DatabaseRepository<User> userService)
+        {
+            this.invoiceHeaderService = invoiceHeaderService;
+            this.invoicDetailService = invoicDetailService;
+            this.userService = userService;
+        }
+
         // GET: Admin/ReportSal
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
         public PartialViewResult ListReportSal()
         {
-            IQueryable<InvoiceHeader> invoiceHeaders = MyInvoic.GetAll().Where(g => g.IsFinaly);
+            IQueryable<InvoiceHeader> invoiceHeaders = invoiceHeaderService.GetAll().Where(g => g.IsFinaly);
 
-            string email = Session["USER"] as string;
-
-            User user = User.GetAll().Where(g => g.Email == email).FirstOrDefault();
+            User user = userService.GetAll().Where(g => g.Email == UserEmail).FirstOrDefault();
 
             return PartialView($"{StatcPath.PartialViewPath}ReportSal/_ListReportSal.cshtml", invoiceHeaders.ToList());
         }
 
         public PartialViewResult DetailReportSal(int id)
         {
-            var Report = MyInvoicDetail.GetAll().Where(g => g.InvoiceHeader_Id == id).ToList();
+            var Report = invoicDetailService.GetAll().Where(g => g.InvoiceHeader_Id == id).ToList();
 
             return PartialView($"{StatcPath.PartialViewPath}ReportSal/_DetailReportSal.cshtml", Report);
         }
 
         public HttpStatusCode ChekoutReportSal(int id)
         {
-
-            var x = MyInvoic.Read(id);
+            var x = invoiceHeaderService.Read(id);
+         
             if (x.Checkout == Checkout.ok)
             {
                 x.Checkout = Checkout.nok;
@@ -54,9 +58,8 @@ namespace FloristStore.Areas.Admin.Controllers
             else
                 x.Checkout = Checkout.ok;
 
-
-            MyInvoic.Update(x);
-            MyInvoic.Save();
+            invoiceHeaderService.Update(x);
+            invoiceHeaderService.Save();
             return HttpStatusCode.OK;
         }
 
