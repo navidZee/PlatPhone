@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,7 +15,7 @@ namespace FloristStore.Models.Dtos
         public string Keyword { get; set; }
         public decimal Price { get; set; }
         public int Inventory { get; set; }
-        public string UploadedFile { get; set; }
+        public IFormFile UploadedFile { get; set; }
         public string ImageUrl { get; set; }
         public byte Discount { get; set; }
     }
@@ -23,7 +24,7 @@ namespace FloristStore.Models.Dtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ImageName { get; set; }
+        public IFormFile ImageName { get; set; }
     }
 
     public class SubCategoryDto

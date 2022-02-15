@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PlatPhone.Auth;
 using PlatPhone.DataLayer;
 using PlatPhone.DataLayer.Enum;
@@ -31,38 +32,36 @@ namespace PlatPhone.Areas.Admin.Controllers
 
         public PartialViewResult ListProductStatus()
         {
-            IQueryable<InvoiceHeader> invoiceHeaders = invoiceService.GetAll().Where(g => g.IsFinaly);
-
-            User user = userService.GetAll().Where(g => g.Email == UserEmail).FirstOrDefault();
+            IQueryable<InvoiceHeader> invoiceHeaders = invoiceService.GetAll().Where(g => g.IsFinaly).Include(d=>d.User);
 
             return PartialView($"{StatcPath.PartialViewPath}ProductStatus/_ListProductStatus.cshtml", invoiceHeaders.ToList());
         }
 
-        public HttpStatusCode SuccssProductStatus(int id)
+        public string SuccssProductStatus(int id)
         {
             var x = invoiceService.Read(id);
             x.RequestLevel = RequestLevel.delivered;
             invoiceService.Update(x);
             invoiceService.Save();
-            return HttpStatusCode.OK;
+            return HttpStatusCode.OK.ToString();
         }
 
-        public HttpStatusCode RejectdProductStatus(int id)
+        public string RejectdProductStatus(int id)
         {
             var x = invoiceService.Read(id);
             x.RequestLevel = RequestLevel.Rejectd;
             invoiceService.Update(x);
             invoiceService.Save();
-            return HttpStatusCode.OK;
+            return HttpStatusCode.OK.ToString();
         }
 
-        public HttpStatusCode SendingProductStatus(int id)
+        public string SendingProductStatus(int id)
         {
             var x = invoiceService.Read(id);
             x.RequestLevel = RequestLevel.Sending;
             invoiceService.Update(x);
             invoiceService.Save();
-            return HttpStatusCode.OK;
+            return HttpStatusCode.OK.ToString();
         }
 
     }

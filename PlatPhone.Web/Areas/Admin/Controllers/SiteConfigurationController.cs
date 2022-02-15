@@ -20,7 +20,7 @@ namespace PlatPhone.Areas.Admin.Controllers
         }
 
         public IActionResult Index() => View(siteConfigurationService.Read());
-        public HttpStatusCode PostSiteConfiguration(List<SiteConfiguration> siteConfigurations)
+        public string PostSiteConfiguration(List<SiteConfiguration> siteConfigurations)
         {
             if (siteConfigurations.Count() > 0)
             {
@@ -32,7 +32,7 @@ namespace PlatPhone.Areas.Admin.Controllers
                 }
             }
 
-            return HttpStatusCode.OK;
+            return HttpStatusCode.OK.ToString();
         }
 
     }

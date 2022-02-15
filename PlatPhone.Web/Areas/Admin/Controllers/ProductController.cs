@@ -35,6 +35,7 @@ namespace PlatPhone.Areas.Admin.Controllers
             this.productService = productService;
             this.userService = userService;
             this.imageService = imageService;
+            this.catgoryService = catgoryService;
             this.invoiceHeaderService = invoiceHeaderService;
         }
 
@@ -69,13 +70,13 @@ namespace PlatPhone.Areas.Admin.Controllers
             return PartialView($"{StatcPath.PartialViewPath}Product/_EditProduct.cshtml", result);
         }
 
-        public HttpStatusCode ConfirmDelete(int id)
+        public string ConfirmDelete(int id)
         {
             var x = productService.Read(id);
             x.IsDeleted = true;
             productService.Update(x);
             productService.Save();
-            return HttpStatusCode.OK;
+            return HttpStatusCode.OK.ToString();
         }
 
         [HttpGet]
@@ -86,10 +87,10 @@ namespace PlatPhone.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public HttpStatusCode Operation(ProductDto productDto)
+        public string Operation(ProductDto productDto)
         {
             if (productDto.CategoryId == 0)
-                return HttpStatusCode.NotModified;
+                return HttpStatusCode.NotModified.ToString();
 
             #region fillModal            
             string imageUrl;
@@ -106,27 +107,30 @@ namespace PlatPhone.Areas.Admin.Controllers
 
             if (temp.Id == 0)
             {
-                //var file = Request.Files[0];
-                //if (PlatPhone.Extention.Validation.ValidatorFile(file, new string[] { "image/jpg", "image/jpeg", "image/png" }) == HttpStatusCode.NotAcceptable)
-                //    return HttpStatusCode.NotAcceptable;
-                //temp.ImageUrl = PlatPhone.Extention.File.CreateFile(file, Server, "Image/Uploade/ProductImage/", "").Result;
+                if (PlatPhone.Extention.Validation.ValidatorFile(productDto.UploadedFile, 0,new string[] { "image/jpg", "image/jpeg", "image/png" }) == HttpStatusCode.NotAcceptable)
+                    return HttpStatusCode.NotAcceptable.ToString();
+
+                temp.ImageUrl = PlatPhone.Extention.File.CreateFile(productDto.UploadedFile, "Image/Uploade/ProductImage/", "").Result;
+
                 productService.Create(temp);
                 productService.Save();
             }
             else
             {
-                //if (Request.Files.Count > 0)
-                //{
-                //    var file = Request.Files[0];
-                //    if (PlatPhone.Extention.Validation.ValidatorFile(file, new string[] { "image/jpg", "image/jpeg", "image/png" }) == HttpStatusCode.NotAcceptable)
-                //        return HttpStatusCode.NotAcceptable;
-                //    temp.ImageUrl = PlatPhone.Extention.File.UpdateFile(file, Server, "Image/Uploade/ProductImage/", "", temp.ImageUrl).Result;
-                //}
+                if (productDto.UploadedFile is not null)
+                {
+                    if (Extention.Validation.ValidatorFile(productDto.UploadedFile, 0,new string[] { "image/jpg", "image/jpeg", "image/png" }) == HttpStatusCode.NotAcceptable)
+                        return HttpStatusCode.NotAcceptable.ToString();
+
+                    temp.ImageUrl = PlatPhone.Extention.File.UpdateFile(productDto.UploadedFile,"Image/Uploade/ProductImage/", "", temp.ImageUrl).Result;
+                }
+
                 productService.Update(temp);
                 ViewBag.msg = productService.Save();
-                return HttpStatusCode.OK;
+
+                return HttpStatusCode.OK.ToString();
             }
-            return HttpStatusCode.OK;
+            return HttpStatusCode.OK.ToString();
         }
 
         public ActionResult Category() => View();

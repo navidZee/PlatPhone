@@ -11,11 +11,10 @@
                 </a>
                 <div class="collapse show" id="collapse_ft_1">
                     <ul class="links">
-                        @*@if (HttpContext.Current.Session["USER"] != null)
+                        @if (User.Identity.IsAuthenticated)
                         {
-                            <li><a href="/Users/Profile">حساب من</a></li>
-
-                        }*@
+                            <li><a href="/User/ProfileUser">حساب من</a></li>
+                        }
                         <li><a href="/Product/ListProduct">محصولات</a></li>
                         <li><a href="/ShopCart/Index">سبد خرید</a></li>
                         <li><a href="/Home/ContactUs">ارتباط با ما</a></li>

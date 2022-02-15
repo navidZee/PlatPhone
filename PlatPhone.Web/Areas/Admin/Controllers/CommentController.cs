@@ -39,26 +39,25 @@ namespace PlatPhone.Areas.Admin.Controllers
         public PartialViewResult ListContactUs()
         {
             return PartialView($"{StatcPath.PartialViewPath}Comments/_ListContactUs.cshtml", context.ContactUs.ToList());
-
         }
 
-        public HttpStatusCode SuccssProductStatus(int id)
+        public string SuccssProductStatus(int id)
         {
             var x = commentService.Read(id);
             x.IsConfirmed = true;
             commentService.Update(x);
             commentService.Save();
-            return HttpStatusCode.OK;
+            return HttpStatusCode.OK.ToString();
         }
 
-        public HttpStatusCode RejectdProductStatus(int id)
+        public string RejectdProductStatus(int id)
         {
             var x = commentService.Read(id);
             x.IsConfirmed = true;
             x.IsRejected = true;
             commentService.Update(x);
             commentService.Save();
-            return HttpStatusCode.OK;
+            return HttpStatusCode.OK.ToString();
         }
 
     }

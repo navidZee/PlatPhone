@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using PlatPhone.Auth;
 using PlatPhone.DataLayer;
 using PlatPhone.DataLayer.Enum;
@@ -25,17 +24,17 @@ namespace PlatPhone.Areas.Admin.Controllers
         public PartialViewResult GetAddCML() => PartialView($"{StatcPath.PartialViewPath}ClientMenuLink/_AddCML.cshtml");
         public PartialViewResult GetEditCML(int id) => PartialView($"{StatcPath.PartialViewPath}ClientMenuLink/_EditCML.cshtml", clientMenuLinkService.Read(id));
         public PartialViewResult GetDisplayCML(int id) => PartialView($"{StatcPath.PartialViewPath}ClientMenuLink/_DisplayCML.cshtml", clientMenuLinkService.Read(id));
-        public HttpStatusCode ConfirmDelete(int id)
+        public string ConfirmDelete(int id)
         {
             var x = clientMenuLinkService.Read(id);
             x.IsDeleted = true;
             clientMenuLinkService.Update(x);
             clientMenuLinkService.Save();
-            return HttpStatusCode.OK;
+            return HttpStatusCode.OK.ToString();
         }
 
         //[ValidateInput(false)]
-        public HttpStatusCode Operation(ClientMenuLink cml)
+        public string Operation(ClientMenuLink cml)
         {
             if (cml.Id==0)
             {
@@ -46,9 +45,9 @@ namespace PlatPhone.Areas.Admin.Controllers
             {
                 clientMenuLinkService.Update(cml);
                 ViewBag.msg = clientMenuLinkService.Save();
-                return HttpStatusCode.OK;
+                return HttpStatusCode.OK.ToString();
             }
-            return HttpStatusCode.OK;
+            return HttpStatusCode.OK.ToString();
         }
     }
 }

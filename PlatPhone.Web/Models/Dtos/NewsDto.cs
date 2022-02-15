@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,7 +13,7 @@ namespace FloristStore.Models.Dtos
         public string Description { get; set; }
         public string ShortDescription { get; set; }
         public string KeyWord { get; set; }
-        public string ImageFile { get; set; }
+        public IFormFile ImageFile { get; set; }
         public string Image { get; set; }
     }
 }

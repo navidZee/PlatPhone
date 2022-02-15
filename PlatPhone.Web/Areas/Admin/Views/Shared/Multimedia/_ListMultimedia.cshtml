@@ -36,7 +36,7 @@
                                         <div class="container">
                                             <h2>@item.Title</h2>
                                             <p>@item.Description</p>
-                                            <img src="/www/Mutimedia/@item.FileName" class="img-rounded" alt="Cinque Terre" width="304" height="236">
+                                            <img src="/Mutimedia/@item.FileName" class="img-rounded" alt="Cinque Terre" width="304" height="236">
                                             <button onclick="LoadAddEditMutimedia(@item.Id, undefined)" class="btn btn-primary editBtn btn-xs"><i class="icon-edit" data-toggle="modal" data-target=".bd-example-modal-lg"></i></button>
                                             <button onclick="ConfirmDelete(@item.Id)" class="btn btn-danger detailBtn btn-xs"><i class="icon-trash"></i></button>
                                         </div>
@@ -63,7 +63,7 @@
                                             <h2>@item.Title</h2>
                                             <p>@item.Description</p>
                                             <video controls="controls" width="304" height="236">
-                                                <source src="/www/Mutimedia/@item.FileName" type="video/mp4" />
+                                                <source src="/Mutimedia/@item.FileName" type="video/mp4" />
                                             </video>
                                             <button onclick="LoadAddEditMutimedia(@item.Id, undefined)" class="btn btn-primary editBtn btn-xs"><i class="icon-edit" data-toggle="modal" data-target=".bd-example-modal-lg"></i></button>
                                             <button onclick="ConfirmDelete(@item.Id)" class="btn btn-danger detailBtn btn-xs"><i class="icon-trash"></i></button>

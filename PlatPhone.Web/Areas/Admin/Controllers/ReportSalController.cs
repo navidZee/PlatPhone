@@ -47,7 +47,7 @@ namespace PlatPhone.Areas.Admin.Controllers
             return PartialView($"{StatcPath.PartialViewPath}ReportSal/_DetailReportSal.cshtml", Report);
         }
 
-        public HttpStatusCode ChekoutReportSal(int id)
+        public string ChekoutReportSal(int id)
         {
             var x = invoiceHeaderService.Read(id);
          
@@ -60,7 +60,7 @@ namespace PlatPhone.Areas.Admin.Controllers
 
             invoiceHeaderService.Update(x);
             invoiceHeaderService.Save();
-            return HttpStatusCode.OK;
+            return HttpStatusCode.OK.ToString();
         }
 
     }

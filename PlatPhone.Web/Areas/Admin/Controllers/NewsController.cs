@@ -15,7 +15,7 @@ namespace PlatPhone.Areas.Admin.Controllers
 
     public class NewsController : BaseController
     {
-       private DatabaseRepository<News> newsService;
+        private DatabaseRepository<News> newsService;
         public NewsController(DatabaseRepository<News> newsService)
         {
             this.newsService = newsService;
@@ -37,7 +37,7 @@ namespace PlatPhone.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public HttpStatusCode Operation(NewsDto newsDto)
+        public string Operation(NewsDto newsDto)
         {
             string imageUrl;
             News temp = new News();
@@ -51,32 +51,31 @@ namespace PlatPhone.Areas.Admin.Controllers
 
             if (temp.Id == 0)
             {
-                //if (Request.Files.Count > 0)
-                //{
-                //    var file = Request.Files[0];
-                //    if (Validation.ValidatorFile(file, new string[] {
-                //            "image/jpg", "image/jpeg", "image/png"}) == HttpStatusCode.NotAcceptable)
-                //        return HttpStatusCode.NotAcceptable;
-                //    temp.Image = PlatPhone.Extention.File.CreateFile(file, Server, "Image/Uploade/NewsImage/", "").Result;
-                //}
+                if (newsDto.ImageFile is not null)
+                {
+                    if (Validation.ValidatorFile(newsDto.ImageFile, 0, new string[] {
+                            "image/jpg", "image/jpeg", "image/png"}) == HttpStatusCode.NotAcceptable)
+                        return HttpStatusCode.NotAcceptable.ToString();
+                    temp.Image = PlatPhone.Extention.File.CreateFile(newsDto.ImageFile, "Image/Uploade/NewsImage/", "").Result;
+                }
                 newsService.Create(temp);
                 newsService.Save();
             }
             else
             {
-                //if (Request.Files.Count > 0)
-                //{
-                //    var file = Request.Files[0];
-                //    if (Validation.ValidatorFile(file, new string[] {
-                //"image/jpg", "image/jpeg", "image/png"}) == HttpStatusCode.NotAcceptable)
-                //        return HttpStatusCode.NotAcceptable;
-                //    temp.Image = Extention.File.UpdateFile(file, Server, "Image/Uploade/NewsImage/", "", temp.Image).Result;
-                //}
+                if (newsDto.ImageFile is not null)
+                {
+                    if (Validation.ValidatorFile(newsDto.ImageFile, 0, new string[] { "image/jpg", "image/jpeg", "image/png" }) == HttpStatusCode.NotAcceptable)
+                        return HttpStatusCode.NotAcceptable.ToString();
+
+                    temp.Image = Extention.File.UpdateFile(newsDto.ImageFile, "Image/Uploade/NewsImage/", "", temp.Image).Result;
+                }
                 newsService.Update(temp);
                 ViewBag.msg = newsService.Save();
-                return HttpStatusCode.OK;
+                return HttpStatusCode.OK.ToString();
             }
-            return HttpStatusCode.OK;
+
+            return HttpStatusCode.OK.ToString();
         }
     }
 }

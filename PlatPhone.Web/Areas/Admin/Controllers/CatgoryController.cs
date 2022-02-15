@@ -31,38 +31,35 @@ namespace PlatPhone.Areas.Admin.Controllers
 
         public PartialViewResult GetAddSubCategory() => PartialView($"{StatcPath.PartialViewPath}Category/_GetAddSubCategory.cshtml", categoryService.Read());
 
-        public HttpStatusCode Operation(CategoryDto categoryDto)
+        public string Operation(CategoryDto categoryDto)
         {
             try
             {
                 Category CatParent = new Category();
                 CatParent.Parent = 0;
                 CatParent.Name = categoryDto.Name;
-                //if (Request.Files[0] != null)
-                //{
-                //    var file = Request.Files[0];
+                if (categoryDto.ImageName != null)
+                {
+                    if (PlatPhone.Extention.Validation.ValidatorFile(categoryDto.ImageName,0, new string[] { "image/svg+xml", "image/jpg", "image/jpeg", "image/png" }) == HttpStatusCode.NotAcceptable)
+                        return HttpStatusCode.NotAcceptable.ToString();
 
-                //    if (
-                //    PlatPhone.Extention.Validation.ValidatorFile(file, new string[] { "image/svg+xml", "image/jpg", "image/jpeg", "image/png" }) == HttpStatusCode.NotAcceptable)
-                //        return HttpStatusCode.NotAcceptable;
-
-                //    CatParent.ImgName = PlatPhone.Extention.File.CreateFile(file, Server, "Image/Uploade/CatrgoryImage/", "").Result;
-                //    categoryService.Create(CatParent);
-                //    categoryService.Save();
-                //    return HttpStatusCode.OK;
-                //}
-                //else
-                //{
-                //}
-                return HttpStatusCode.BadRequest;
+                    CatParent.ImgName = PlatPhone.Extention.File.CreateFile(categoryDto.ImageName, "Image/Uploade/CatrgoryImage/", "").Result;
+                    categoryService.Create(CatParent);
+                    categoryService.Save();
+                    return HttpStatusCode.OK.ToString();
+                }
+                else
+                {
+                    return HttpStatusCode.BadRequest.ToString();
+                }
             }
             catch
             {
-                return HttpStatusCode.NotFound;
+                return HttpStatusCode.NotFound.ToString();
             }
         }
 
-        public HttpStatusCode OperationSubCategory(SubCategoryDto SubCategoryDto)
+        public string OperationSubCategory(SubCategoryDto SubCategoryDto)
         {
             try
             {
@@ -73,21 +70,21 @@ namespace PlatPhone.Areas.Admin.Controllers
 
                 categoryService.Create(SubCat);
                 categoryService.Save();
-                return HttpStatusCode.OK;
+                return HttpStatusCode.OK.ToString();
             }
             catch
             {
-                return HttpStatusCode.NotFound;
+                return HttpStatusCode.NotFound.ToString();
             }
         }
 
-        public HttpStatusCode ConfirmDelete(int id)
+        public string ConfirmDelete(int id)
         {
             var x = categoryService.Read(id);
             x.IsDeleted = true;
             categoryService.Update(x);
             categoryService.Save();
-            return HttpStatusCode.OK;
+            return HttpStatusCode.OK.ToString();
         }
 
         [HttpPost]

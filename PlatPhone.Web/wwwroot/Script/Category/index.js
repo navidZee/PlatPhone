@@ -47,6 +47,7 @@ var onBegin = function () {
 }
 
 var onSuccess = function (context) {
+
     if (context == "OK") {
         $('#BasicModal').modal('hide');
         LoadListCategory();
