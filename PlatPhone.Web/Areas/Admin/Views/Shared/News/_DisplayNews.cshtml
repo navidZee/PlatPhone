@@ -1,0 +1,42 @@
+﻿@model DataLayer.News
+<table border="0" align="center" class="table table-condensed table-hover">
+    <tr>
+        <td>
+            عنوان خبر :
+        </td>
+        <td>
+            @Model.Title
+        </td>
+    </tr>
+    <tr>
+        <td>
+           توضیح کوتاهی از خبر :
+        </td>
+        <td>
+            @Model.ShortDescription
+        </td>
+    </tr>
+    <tr>
+        <td>
+            خبر
+        </td>
+        <td>
+            @Model.Description
+        </td>
+    </tr>    
+    <tr>
+        <td>
+            عکس خبر :
+        </td>
+        <td>
+            @if (Model.Image != null)
+            {
+                <img src="/www/Image/Uploade/NewsImage/@Model.Image" style="width:200px" class="img-fluid d-block mx-auto" />
+            }
+            else
+            {
+                <p>تصویری ندارد</p>
+            }
+        </td>
+    </tr>
+</table>

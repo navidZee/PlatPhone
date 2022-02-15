@@ -12,6 +12,10 @@
     <ProjectReference Include="..\PlatPhone.DataLayer\PlatPhone.DataLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>

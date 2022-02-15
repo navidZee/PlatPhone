@@ -1,0 +1,62 @@
+﻿@model List<DataLayer.Category>
+
+<!-- page start-->
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                افزودن دسته بندی
+            </header>
+            <div class="panel-body">
+                <div class="stepy-tab">
+                    <ul id="default-titles" class="stepy-titles clearfix">
+                        <li id="default-title-0" class="current-step">
+                            <div>دسته اصلی</div>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <form class="form-horizontal" id="default" action="/Catgory/Operation"
+                      method="post"
+                      enctype="multipart/form-data"
+                      data-ajax-failure="onFailed"
+                      data-ajax-success="onSuccess"
+                      data-ajax="true">
+
+                    <input id="Id" name="Id" type="hidden" value="0">
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">نام دسته بندی</label>
+                        <div class="col-lg-10">
+                            <input type="text" required="required" id="Name" name="Name" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">آپلود تصویر</label>
+                        <div class="col-lg-10">
+                            <input type="file" required="required" id="ImageName" name="ImageName" class="form-control form-control-file" />
+                        </div>
+                    </div>
+
+                    <input type="submit" class="finish btn btn-danger" value="ذخیره" />
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+<!-- page end-->
+
+<script>
+    $(function () {
+        $('#default').stepy({
+            backLabel: 'قبلی',
+            block: true,
+            nextLabel: 'بعدی',
+            titleClick: true,
+            titleTarget: '.stepy-tab'
+        });
+    });
+</script>
+

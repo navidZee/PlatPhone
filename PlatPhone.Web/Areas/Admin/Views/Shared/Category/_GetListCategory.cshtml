@@ -1,0 +1,71 @@
+﻿@model List<DataLayer.Category>
+@{
+    int i = 1;
+}
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--panel 2-->
+        <section class="panel">
+
+            <section class="Panel_Withe_Body row" style="margin:7px 2px 2px 0;">
+                <div class="row">
+                    <div class="col-md-2" style="margin-bottom:8px">
+                        <button onclick="LoadAddCategory()" class="btn btn-block btn-success btn-sm btn-round" data-toggle="modal" data-target=".bd-example-modal-lg" @*data-toggle="modal" data-target="#modal-default"*@>
+                            افزودن دسته اصلی
+                        </button>
+                    </div>
+                    <div class="col-md-2" style="display:none">
+                        <button onclick="GetAddSubCategory()" class="btn btn-block btn-success btn-sm btn-round" data-toggle="modal" data-target=".bd-example-modal-lg" @*data-toggle="modal" data-target="#modal-default"*@>
+                            افزودن زیر دسته
+                        </button>
+                        <br />
+                    </div>
+                    <table class="table table-condensed table-hover " style="border-radius: 0 0 10px 10px">
+
+                        <tr>
+                            <td class="font-weight-bold ">#</td>
+                            <td>نام دسته </td>
+                            <td>تصویر </td>
+                            <td> عملیات </td>
+                        </tr>
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>@i</td>
+
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td>
+                                        <img src="/www/Image/Uploade/CatrgoryImage/@item.ImgName" style="width:150px;height:100px" />
+
+                                    </td>
+
+                                    <td>
+                                        <a onclick="confirmdelete(@item.Id)" class="btn btn-danger detailBtn btn-xs" data-toggle="modal" data-target="#modal-trash"><i class="icon-trash"></i></a>
+                                    </td>
+
+                                </tr>
+
+                                i += 1;
+                            }
+
+                        }
+                        else
+                        {
+                            <tr class="warning">
+                                <td colspan="4">داده ای برای نمایش وجود ندارد !</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </section>
+        </section>
+    </div>
+</div>

@@ -2,7 +2,7 @@
 using PlatPhone.DataLayer;
 using PlatPhone.DataLayer.Service;
 using System.Linq;
-
+        
 namespace PlatPhone.Controllers
 {
     public class NewsController : BaseController

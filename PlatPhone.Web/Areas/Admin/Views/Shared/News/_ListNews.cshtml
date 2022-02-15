@@ -1,0 +1,72 @@
+﻿@model List<DataLayer.News>
+@using DataLayer.Enum
+@{
+    int i = 1;
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--panel 2-->
+        <section class="panel">
+
+            <section class="Panel_Withe_Body row" style="margin:7px 2px 2px 0;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <button onclick="LoadAddEditNews()" class="btn btn-block btn-success btn-sm btn-round" data-toggle="modal" data-target=".bd-example-modal-lg" @*data-toggle="modal" data-target="#modal-default"*@>
+                            افزودن اخبار جدید
+                        </button>
+                    </div>
+                </div>
+                <br />
+
+                <table class="table table-condensed table-hover" style="border-radius: 0 0 10px 10px">
+
+                    <tr>
+                        <td class="font-weight-bold">#</td>
+                        <td>عنوان</td>
+                        <td>توضیح کوتاه</td>
+                        <td>کلمات کلیدی</td>
+                        <td>نمایش/ویرایش/حذف</td>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        var myid = item.Id;
+                        <tr>
+                            <td>@i</td>
+
+                            <td>@item.Title </td>
+
+                            <td>@item.ShortDescription</td>
+
+                            <td>
+
+                                @{
+                                    if (item.KeyWord != null)
+                                    {
+                                        /**/
+                                        foreach (string keyword in item.KeyWord.Split('-'))
+                                        {
+                                            <span>@keyword</span>
+                                        }
+                                    }
+                                }
+
+                            </td>
+
+                            <td>
+                                <button onclick="LoadDetailNews(@item.Id)" data-toggle="modal" data-target="#myModal2" class="btn btn-warning  btn-xs"><i class="icon-eye-open"></i></button>
+                                <button onclick="LoadAddEditNews(@item.Id)" data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-primary editBtn btn-xs"><i class="icon-edit"></i></button>
+                                <button onclick="ConfirmDelete(@item.Id)" class="btn btn-danger detailBtn btn-xs"><i class="icon-trash"></i></button>
+                            </td>
+                        </tr>
+                        i = i + 1;
+                    }
+
+                </table>
+            </section>
+        </section>
+    </div>
+</div>
+

@@ -1,0 +1,20 @@
+﻿@model DataLayer.ClientMenuLink
+<table border="0" align="center" class="table table-condensed ">
+    <tr>
+        <td>
+            عنوان  :
+        </td>
+        <td>
+            @Model.Title
+        </td>
+    </tr>
+    <tr>
+        <td>
+            محتویات صفحه
+        </td>
+        <td>
+            @Html.Raw( Model.Content)
+        </td>
+    </tr>
+</table>
+

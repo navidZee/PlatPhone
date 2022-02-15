@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @Html.Partial("LayoutPartial/_MetaPartial")
+
+    <link rel="shortcut icon" href="img/favicon.html">
+    <title>داشبورد مدیریت</title>
+
+    @Html.Partial("LayoutPartial/_LinkPartial")
+
+    @RenderSection("Header", false);
+
+</head>
+<body>
+
+    <section id="container" class="">
+
+        @Html.Partial("LayoutPartial/_HeaderPartial")
+
+        @Html.Partial("LayoutPartial/_SideBarPartial")
+
+
+        <section id="main-content">
+            <section class="wrapper">
+                @RenderBody()
+            </section>
+        </section>
+
+    </section>
+
+
+    @Html.Partial("LayoutPartial/_ScriptPartial")
+
+    @RenderSection("Scripts", false)
+
+</body>
+</html>

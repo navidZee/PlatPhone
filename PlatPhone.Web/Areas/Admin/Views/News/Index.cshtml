@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+<div id="NewsTableRow">
+
+</div>
+
+<div id="BasicModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg MyModal" id="MyModal" style="width:80%">
+        <div class="modal-content" id="ContentModal">
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">جزئیات</h4>
+            </div>
+            <div class="modal-body" id="showinf">
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-danger" type="button">خروج</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="/www/admin_section/js/jquery.stepy.js"></script>
+    <script src="/www/Script/News/Index.js"></script>
+}
+

@@ -1,0 +1,77 @@
+﻿@model List<DataLayer.SiteConfiguration>
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--panel 2-->
+        <section class="panel">
+
+            <section class="Panel_Withe_Body row" style="margin:7px 2px 2px 0;">
+                <div class="row">
+                    <div class="col-md-2" style="margin-bottom:8px">
+                        تظیمات درگاه ریزن پال
+
+                    </div>
+                </div>
+                <div class="row">
+                    <form>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">عنوان سایت در درگاه</label>
+                            <div class="col-lg-4">
+                                <input type="text" @*style="margin-top: 15px;"*@ id="siteTitle" name="siteTitle" value='@Model.Where(g => g.Key == "TitleZarinPal").FirstOrDefault().Value' class="form-control" />
+                            </div>
+
+                            <label class="col-lg-2 control-label">مرچن کد وصل شدن به درگاه</label>
+                            <div class="col-lg-4">
+                                <input type="text" id="siteMerchanId" value='@Model.Where(g => g.Key == "MerchantIDZarinPal").FirstOrDefault().Value' class="form-control " />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label" style="margin-top: 12px;">ایمیل درگاه</label>
+                            <div class="col-lg-4">
+                                <input type="text" id="siteEmail" style="margin-top: 15px;" value='@Model.Where(g => g.Key == "EmailZarinPal").FirstOrDefault().Value' class="form-control form-control-file" />
+                            </div>
+                        </div>
+
+
+                        <input type="button" class="btn btn-info " onclick="sendInfo()" value="ذخیره" style="float: left;margin-top: 15px;margin-left: 16px;" />
+                    </form>
+
+                </div>
+            </section>
+        </section>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function sendInfo() {
+            var array = [];
+            array.push({ Key: "TitleZarinPal", Value: $("input#siteTitle").val() });
+            array.push({ Key: "MerchantIDZarinPal", Value: $("input#siteMerchanId").val() });
+            array.push({ Key: "EmailZarinPal", Value: $("input#siteEmail").val() });
+            var postData = { values: array };
+            console.log(array);
+            $.ajax({
+                type: "POST",
+                url: "/Admin/SiteConfiguration/PostSiteConfiguration",
+                data: { siteConfigurations: array },
+                success: function (result) {
+
+                    if (result == "OK") {
+                        alertOK();
+
+                    }
+                }, error: function () {
+
+                }
+
+            });
+        }
+    </script>
+}

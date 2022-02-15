@@ -79,7 +79,8 @@ namespace PlatPhone.Controllers
         {
             var claims = new List<Claim>
                     {
-                        new Claim("Email", Email)
+                        new Claim("Email", Email),
+                        new Claim(ClaimTypes.Email, Email)
                     };
 
             ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");

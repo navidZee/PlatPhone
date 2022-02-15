@@ -1,0 +1,66 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                ثبت خبر 
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </header>
+            <div class="panel-body">
+                <form class="form-horizontal" id="default" action="/Admin/News/Operation"
+                      method="post"
+                      enctype="multipart/form-data"
+                      data-ajax-failure="onFailed"
+                      data-ajax-success="onSuccess"
+                      data-ajax="true">
+
+                    <input id="Id" name="Id" type="hidden" value="0">
+                    <fieldset title="خبر" class="step" id="default-step-0">
+                        <legend></legend>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">عنوان</label>
+                            <div class="col-lg-10">
+                                <input name="Title" id="Title"required="required" type="text" class="form-control" placeholder="عنوان">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">کلمات کلیدی</label>
+                            <div class="col-lg-4">
+                                <input name="Keyword" id="Keyword" type="text" class="form-control" placeholder="جدا کردن با -">
+                            </div>
+
+                            <label class="col-lg-2 control-label">آپلود عکس خبر</label>
+                            <div class="col-lg-4">
+                                <input type="file" name="Image" required="required" />
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">توضیح کوتاه</label>
+                            <div class="col-lg-10">
+                                <textarea class="form-control" required="required" name="ShortDescription" id="ShortDescription"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">خبر</label>
+                            <div class="col-lg-10">
+                                <textarea style="height:230px" required="required" class="form-control" name="Description" id="Description"></textarea>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                    <input type="hidden" id="Id" name="Id" />
+                    <input type="hidden" id="Image" name="Image" />
+                    <input type="submit" class="finish btn btn-success" value="ذخیره" />
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+<!-- page end-->
+

@@ -1,0 +1,94 @@
+﻿@model List<DataLayer.Multimedia>
+@using DataLayer.Enum
+@{
+    int i = 1;
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--panel 2-->
+        <section class="panel">
+
+            <!--tab nav start-->
+            <section class="panel">
+                <header class="panel-heading tab-bg-dark-navy-blue ">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#home">تصاویر</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#about">ویدئو</a>
+                        </li>
+                    </ul>
+                </header>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane active">
+
+                            <section class=" row" style="margin:7px 2px 2px 0;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <button onclick="LoadAddEditMutimedia(undefined,1)" class="btn btn-block btn-success btn-sm btn-round" data-toggle="modal" data-target=".bd-example-modal-lg" @*data-toggle="modal" data-target="#modal-default"*@>
+                                            افزودن تصویر جدید
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                            <div class="row">
+                                @foreach (var item in Model.Where(g => g.MultimediaType == DataLayer.MultimediaType.Image))
+                                {
+                                    <div class="col-md-4 ">
+                                        <div class="container">
+                                            <h2>@item.Title</h2>
+                                            <p>@item.Description</p>
+                                            <img src="/www/Mutimedia/@item.FileName" class="img-rounded" alt="Cinque Terre" width="304" height="236">
+                                            <button onclick="LoadAddEditMutimedia(@item.Id, undefined)" class="btn btn-primary editBtn btn-xs"><i class="icon-edit" data-toggle="modal" data-target=".bd-example-modal-lg"></i></button>
+                                            <button onclick="ConfirmDelete(@item.Id)" class="btn btn-danger detailBtn btn-xs"><i class="icon-trash"></i></button>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+                        <div id="about" class="tab-pane">
+
+                            <section class=" row" style="margin:7px 2px 2px 0;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <button onclick="LoadAddEditMutimedia(undefined,2)" class="btn btn-block btn-success btn-sm btn-round" data-toggle="modal" data-target=".bd-example-modal-lg" @*data-toggle="modal" data-target="#modal-default"*@>
+                                            افزودن ویدئو جدید
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                            <div class="row">
+
+                                @foreach (var item in Model.Where(g => g.MultimediaType == DataLayer.MultimediaType.Video))
+                                {
+                                    <div class="col-md-4">
+                                        <div class="container">
+                                            <h2>@item.Title</h2>
+                                            <p>@item.Description</p>
+                                            <video controls="controls" width="304" height="236">
+                                                <source src="/www/Mutimedia/@item.FileName" type="video/mp4" />
+                                            </video>
+                                            <button onclick="LoadAddEditMutimedia(@item.Id, undefined)" class="btn btn-primary editBtn btn-xs"><i class="icon-edit" data-toggle="modal" data-target=".bd-example-modal-lg"></i></button>
+                                            <button onclick="ConfirmDelete(@item.Id)" class="btn btn-danger detailBtn btn-xs"><i class="icon-trash"></i></button>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--tab nav start-->
+
+        </section>
+    </div>
+</div>

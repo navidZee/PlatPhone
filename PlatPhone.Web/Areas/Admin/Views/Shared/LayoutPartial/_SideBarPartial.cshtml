@@ -1,0 +1,38 @@
+﻿@using DataLayer.Enum;
+@{
+    string email = Session["USER"] as string;
+    DataLayer.EF eF = new DataLayer.EF();
+    DataLayer.Enum.RoleEnum userRole = eF.Users.Where(g => g.Email == email).Select(g => g.Role).FirstOrDefault();
+}
+<aside>
+    <div id="sidebar" class="nav-collapse ">
+        <!-- sidebar menu start-->
+        <ul class="sidebar-menu">
+            <li class="active">
+                <a class="" href="/Admin/Home/Index">
+                    <i class="icon-dashboard"></i>
+                    <span>داشبورد</span>
+                </a>
+            </li>
+            @if (userRole == RoleEnum.Admin)
+            {
+                <li class="sub-menu">
+                    <a href="javascript:;" class="">
+                        <i class="icon-book"></i>
+                        <span>مدیریت</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="/Admin/Catgory/Index">دسته بندی ها</a></li>
+                        <li><a href="/Admin/Product/Index">محصولات</a></li>
+                        <li><a href="/Admin/ProductStatus/Index">فاکتورها</a></li>
+                        <li><a href="/Admin/News/Index">بلاگ</a></li>
+                        <li><a href="/Admin/ClientMenuLink/Index">لینک </a></li>
+                        <li><a href="/Admin/Comment/Index">تایید نظرات </a></li>
+                        <li><a href="/Admin/Comment/IndexContactUs">ارتباط با ما </a></li>
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+</aside>

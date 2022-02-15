@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PlatPhone.Auth;
 using PlatPhone.DataLayer;
+using PlatPhone.DataLayer.Enum;
 using PlatPhone.DataLayer.Service;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 
 namespace PlatPhone.Controllers
 {
@@ -23,10 +23,11 @@ namespace PlatPhone.Controllers
             this.invoiceDetailService = invoiceDetailService;
         }
 
+        [SessionAuthorize(true, RoleEnum.Admin, RoleEnum.Customer)]
         public IActionResult ProfileUser(bool shopcart = false)
         {
             ViewBag.active = 0;
-            string Email = User.FindFirst(d=>d.Type == "Email").Value;
+            string Email = User.FindFirst(d => d.Type == "Email").Value;
             DataLayer.User user = userService.GetAll().Where(g => g.Email == Email).FirstOrDefault();
 
             return View(new Tuple<User, bool>(user, shopcart));
@@ -70,7 +71,7 @@ namespace PlatPhone.Controllers
         //    string Email = Session["USER"] as string;
         //    DataLayer.User MyUser = userService.GetAll().Where(g => g.Email == Email).FirstOrDefault();
 
-            
+
         //    if (MyUser == null)
         //        return Redirect("/Home/Index");
         //    var UserInvoce = invoiceHeaderService.GetAll().Where(g => g.User_Id == MyUser.Id && g.IsFinaly).Include(p => p.InvoiceDetails).OrderByDescending(p=>p.Id).ToList();

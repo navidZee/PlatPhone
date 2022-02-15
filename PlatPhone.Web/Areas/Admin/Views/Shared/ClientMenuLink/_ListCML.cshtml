@@ -1,0 +1,43 @@
+﻿@model List<DataLayer.ClientMenuLink>
+@{
+    int i = 1;
+}
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <section class="Panel_Withe_Body row" style="margin:7px 2px 2px 0;">
+                <div class="row">
+                    <div class="col-md-2">
+                        <button onclick="LoadAddEditCML()" class="btn btn-block btn-success btn-sm btn-round" data-toggle="modal" data-target=".bd-example-modal-lg" @*data-toggle="modal" data-target="#modal-default"*@>
+                            افزودن لینک
+                        </button>
+                    </div>
+                </div>
+                <br />
+                <table class="table table-condensed table-hover" style="border-radius: 0 0 10px 10px">
+                    <tr>
+                        <td class="font-weight-bold">#</td>
+                        <td>عنوان</td>
+                        <td>نمایش/ویرایش/حذف</td>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        var myid = item.Id;
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.Title</td>
+                            <td>
+                                <button onclick="LoadDetailCML(@item.Id)" data-toggle="modal" data-target="#myModal2" class="btn btn-warning  btn-xs"><i class="icon-eye-open"></i></button>
+                                <button onclick="LoadAddEditCML(@item.Id)" data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-primary editBtn btn-xs"><i class="icon-edit"></i></button>
+                                <button onclick="ConfirmDelete(@item.Id)" class="btn btn-danger detailBtn btn-xs"><i class="icon-trash"></i></button>
+                            </td>
+                        </tr>
+                        i = i + 1;
+                    }
+                </table>
+            </section>
+        </section>
+    </div>
+</div>
+
+
