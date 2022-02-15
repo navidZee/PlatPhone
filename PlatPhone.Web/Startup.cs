@@ -53,17 +53,21 @@ namespace PlatPhone.Web
 
             app.UseStaticFiles();
 
+            app.UseCookiePolicy();
+
+            app.UseAuthentication();
+
             app.UseRouting();
 
             app.UseSession();
 
             app.UseEndpoints(routes =>
             {
-                routes.MapControllerRoute(                    
-                    name: "areas",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"                                       
-                );
                 routes.MapControllerRoute("Default", "{controller=Home}/{action=Index}/{id?}");
+                routes.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
             });
         }
     }

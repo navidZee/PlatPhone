@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace PlatPhone.Controllers
 {
-    [Area("Admin")]
+ 
     public class BaseController : Controller
     {
         private DatabaseRepository<Category> categoryService;

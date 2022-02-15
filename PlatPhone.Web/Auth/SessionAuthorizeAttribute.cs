@@ -22,8 +22,7 @@ namespace PlatPhone.Auth
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (IsAuth)
-            {
-                
+            {                
                 if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
                 {
                     if (filterContext.HttpContext.Request.Path.Value!= null)
