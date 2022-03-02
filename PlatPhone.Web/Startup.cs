@@ -1,14 +1,13 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PlatPhone.DataLayer.Context;
 using PlatPhone.DataLayer.Service;
+using System;
 
 namespace PlatPhone.Web
 {
@@ -35,6 +34,12 @@ namespace PlatPhone.Web
                         {
                             options.LoginPath = "/Account/Login";
                         });
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10800);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -52,6 +57,8 @@ namespace PlatPhone.Web
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseCookiePolicy();
 

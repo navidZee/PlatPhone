@@ -16,39 +16,31 @@
                             <th>تخفیف</th>
                             <th>تعداد</th>
                             <th>قیمت</th>
-                            <th>فروشگاه</th>
                             <th>حذف</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        <tr ng-repeat="item in ShopCartDetail" id="record_{{item.Product.Id}}">
-
-                            <td><a href="/Product/DetailProduct/{{item.Product.Id}}"><img src="{{item.Product.Image}}" style="width:150px" alt=" " class="img-responsive" /></a></td>
-                            <td>{{item.Product.ProductName}}</td>
-                            <td>{{item.Product.Price}}</td>
-                            <td>{{item.Sal}}</td>
+                        <tr ng-repeat="item in ShopCartDetail" id="record_{{item.product.id}}">
+                            
+                            <td><a href="/Product/DetailProduct/{{item.product.id}}"><img src="{{item.product.image}}" style="width:150px" alt=" " class="img-responsive" /></a></td>
                             <td>
-                                <button ng-click="changeCount(item.Product.Id,false,item.Count,item.NameAndValue)" style="width:auto" type="button" class="btn btn-default btn-number">
-                                    <img style="width:20px" src="client_section/img/SVG/minimize.svg" /><i style="display:none">1</i>
+                                {{item.product.productName}}
+                            </td>
+                            <td>{{item.product.price}}</td>
+                            <td>{{item.sal}}</td>
+                            <td>
+                                <button ng-click="changeCount({{item.product.id}},false,{{item.count}},{{item.nameAndValue}})" style="width:auto" type="button" class="btn btn-default btn-number">
+                                    <img style="width:20px" src="/img/SVG/minimize.svg" /><i style="display:none">1</i>
                                 </button>
-                                <input class="text-center" readonly id="CountProduct_itemmm.ProductId_FK" onkeyup="ChangeFromCart(itemmm.ProductId_FK,0)" style="width:41px;" type="text" value="{{item.Count}}">
-                                <button ng-click="changeCount(item.Product.Id,true,item.Count,item.NameAndValue)" style="width:auto" type="button" class="btn btn-default btn-number">
-                                    <img style="width:20px" src="client_section/img/SVG/plus.svg" /><i style="display:none">1</i>
+                                <input class="text-center" readonly id="CountProduct_itemmm.productId_FK" onkeyup="ChangeFromCart(itemmm.productId_FK,0)" style="width:41px;" type="text" value="{{item.count}}">
+                                <button ng-click="changeCount({{item.product.id}},true,{{item.count}},{{item.nameAndValue}})" style="width:auto" type="button" class="btn btn-default btn-number">
+                                    <img style="width:20px" src="/img/SVG/plus.svg" /><i style="display:none">1</i>
                                 </button>
                             </td>
-                            <td class="invert">{{item.Price}}</td>
-
-
+                            <td class="invert">{{item.price}}</td>
                             <td>
-                                <div class="rem">
-                                    <div class="close1"> </div>
-                                </div>
+                                <button class="btn btn-danger" style="cursor:pointer" ng-click="removeFromCart(item.product.id)">حذف</button>
                             </td>
-                            <td>
-                                <button class="btn btn-danger" style="cursor:pointer" ng-click="removeFromCart(item.Product.Id)">حذف</button>
-                            </td>
-
                         </tr>
                     </tbody>
 
@@ -56,7 +48,7 @@
             </div>
             <div class="col-md-3 strip">
                 <div class="col-lg-12 text-center" style="margin-top: 20%">
-                    <h6>مجموع (<b id="CountProduct">{{TotalCountProduct}}</b>عدد): {{TotalProductPrice}}  ریال</h6>
+                    <h6>مجموع (<b id="CountProduct">{{totalCountProduct}}</b>عدد): {{TotalProductPrice}}  ریال</h6>
                 </div>
                 <div class="col-lg-12 text-center">
                     <h6>مجموع تخفیف: {{TotalDiscount}} ریال</h6>
@@ -78,7 +70,7 @@
 </main>
 
 @section Scripts{
-    <script src="ShopCart/Angular/Index.Module.js"></script>
-    <script src="ShopCart/Angular/Index.Service.js"></script>
-    <script src="ShopCart/Angular/Index.Controller.js"></script>
+    <script src="/ShopCart/Angular/Index.Module.js"></script>
+    <script src="/ShopCart/Angular/Index.Service.js"></script>
+    <script src="/ShopCart/Angular/Index.Controller.js"></script>
 }

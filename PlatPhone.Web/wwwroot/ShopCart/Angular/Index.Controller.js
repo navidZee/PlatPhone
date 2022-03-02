@@ -3,16 +3,15 @@
     $scope.Detail = [];
     $scope.getShopCartDetail = function () {
         IndexService.GetShopCartDetail().then(function (output) {
-
             $scope.ShopCartDetail = output.data; 
             $scope.Total(output.data);
-            //console.log(output.data);            
         }, function () {
             alert("در دریافت اطلاعات مشکلی بوجود امده است");
         });
     };
 
-    $scope.changeCount = function (productId, status, Count,Attribute) {
+    $scope.changeCount = function (productId, status, Count, Attribute) {
+        debugger;
         if (Count === 1 && status === false) {
             return null;
         }
@@ -28,26 +27,22 @@
         }
     };
 
-
     $scope.Total = function (data) {
         $scope.TotalProductPrice = 0;
         $scope.TotalDiscount = 0;
         $scope.TotalBuyProduct = 0;
         $scope.TotalCountProduct = 0;
         angular.forEach(data, function (value) {
-            $scope.TotalProductPrice += ((value.Product.Price * value.Count));
-            $scope.TotalDiscount += (value.Sal);
-            $scope.TotalBuyProduct += (value.Price);
-            $scope.TotalCountProduct += value.Count;
-            $scope.Detail[value.Product] = value.Details;
+            $scope.TotalProductPrice += ((value.product.price * value.count));
+            $scope.TotalDiscount += (value.sal);
+            $scope.TotalBuyProduct += (value.price);
+            $scope.TotalCountProduct += value.count;
+            $scope.Detail[value.product] = value.details;
         });
       
         $rootScope.$emit('changeCount', $scope.TotalCountProduct);
         $rootScope.$emit('CurrentShopCart', $scope.ShopCartDetail);
     };
-    //$scope.$watchCollection($scope.TotalProductPrice, function (newvalue, oldvalue) {        
-    //    $rootScope.$emit('CurrentShopCart', $scope.ShopCartDetail);
-    //});
     $scope.removeFromCart = function (productId, Attribute) {
         IndexService.RemoveFromCart(productId, Attribute).then(function (output) {
             $scope.ShopCartDetail = output.data;

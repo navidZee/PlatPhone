@@ -1,45 +1,57 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using PlatPhone.Areas.Admin.Controllers;
+using PlatPhone.Auth;
+using PlatPhone.DataLayer;
+using PlatPhone.DataLayer.Enum;
+using PlatPhone.DataLayer.Service;
+using PlatPhone.Models.ViewModel;
+using PlatPhone.Models.ViewModel.ShopCart;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using DataLayer;
-using DataLayer.Service;
-using System.Collections;
-using FloristStore.Models.ViewModel.ShopCart;
-using DataLayer.Enum;
-using FloristStore.Auth;
 
-namespace FloristStore.Controllers
+namespace PlatPhone.Controllers
 {
     public class ShopCartController : BaseController
     {
-        DatabaseRepository<User> userTable = new DatabaseRepository<User>(new EF());
-        DatabaseRepository<Product> productTable = new DatabaseRepository<Product>(new EF());
-        DatabaseRepository<InvoiceHeader> invoiceHeaderTable = new DatabaseRepository<InvoiceHeader>(new EF());
-        DatabaseRepository<InvoiceDetail> invoiceDetailTable = new DatabaseRepository<InvoiceDetail>(new EF());
-        DatabaseRepository<SiteConfiguration> siteConfigurationTable = new DatabaseRepository<SiteConfiguration>(new EF());
+        private DatabaseRepository<User> userService;
+        private DatabaseRepository<Product> productService;
+        private DatabaseRepository<InvoiceHeader> invoiceHeaderService;
+        private DatabaseRepository<InvoiceDetail> invoiceDetailService;
+        private DatabaseRepository<SiteConfiguration> siteConfigurationService;
+
+        public ShopCartController(DatabaseRepository<User> userService,
+            DatabaseRepository<Product> productService,
+            DatabaseRepository<InvoiceHeader> invoiceHeaderService,
+            DatabaseRepository<InvoiceDetail> invoiceDetailService,
+            DatabaseRepository<SiteConfiguration> siteConfigurationService)
+        {
+            this.userService = userService;
+            this.productService = productService;
+            this.invoiceHeaderService = invoiceHeaderService;
+            this.invoiceDetailService = invoiceDetailService;
+            this.siteConfigurationService = siteConfigurationService;
+        }
+
         // GET: ShopCart
         public IActionResult Index() => View();
 
         [SessionAuthorize(true, RoleEnum.Admin, RoleEnum.Customer)]
         public IActionResult Shoping()
         {
-            string email = Session["USER"] as string;
-            DataLayer.User user = userTable.GetAll().Where(g => g.Email == email).FirstOrDefault();
+            User user = userService.GetAll().Where(g => g.Email == UserEmail).FirstOrDefault();
             if (user == null)
                 return Redirect("/Account/Login");
 
-            if (user.Name == null ||
-                            user.Family == null ||
-                            user.UserAddress == null ||
-                            user.Tell == null)
+            if (user.Name == null || user.Family == null || user.UserAddress == null || user.Tell == null)
             {
                 ViewBag.EditePersonalInformation = "FullInfo";
                 return Redirect("/User/ProfileUser?shopcart=true");
             }
 
-            SetCartHeader(Session["ShopCart"] as List<ShopCartViewModel>, Session["CartHeader"] as List<InvoiceHeader>);
+            SetCartHeader(GetShopCartFromSession(), GetCartHeaderFromSession());
             return Redirect("/ShopCart/Payment");
         }
 
@@ -47,27 +59,30 @@ namespace FloristStore.Controllers
 
         public JsonResult GetShopCart()
         {
-            if (Session["ShopCart"] != null)
+            if (IsNotNullSession("ShopCart"))
             {
-                List<ShopCartViewModel> cart = Session["ShopCart"] as List<ShopCartViewModel>;
-                if (Session["CartHeader"] != null)
-                    return Json(GetRecord(cart, Session["CartHeader"] as List<InvoiceHeader>), JsonRequestBehavior.AllowGet);
-                return Json(GetCart(cart), JsonRequestBehavior.AllowGet);
+                List<ShopCartViewModel> cart = GetShopCartFromSession();
+
+                if (IsNotNullSession("CartHeader"))
+                    return Json(GetRecord(cart, GetCartHeaderFromSession()));
+
+                return Json(GetCart(cart));
             }
-            return Json(false, JsonRequestBehavior.AllowGet);
+            return Json(false);
         }
+
         public JsonResult GetShopingInformation()
         {
-            List<ShopCartViewModel> cart = Session["ShopCart"] as List<ShopCartViewModel>;
-            List<InvoiceHeader> RecordCartHeader = new List<InvoiceHeader>();
-            if (Session["CartHeader"] != null)
-                RecordCartHeader = Session["CartHeader"] as List<InvoiceHeader>;
+            List<ShopCartViewModel> cart = GetShopCartFromSession();
+            List<InvoiceHeader> RecordCartHeader = GetCartHeaderFromSession();
+
             dynamic x = GetRecord(cart.ToList(), RecordCartHeader);
 
-            return Json(x, JsonRequestBehavior.AllowGet);
+            return Json(x);
         }
 
         #region GetShopCart
+
         public List<ShopCartViewModel> GetCart(List<ShopCartViewModel> cart) => cart.Select(p => new ShopCartViewModel()
         {
             Count = p.Count,
@@ -79,9 +94,7 @@ namespace FloristStore.Controllers
 
         public dynamic GetRecord(List<ShopCartViewModel> cart, List<InvoiceHeader> RecordCartHeader)
         {
-            string Email = Session["USER"] as string;
-            DataLayer.User user = userTable.GetAll().Where(g => g.Email == Email).FirstOrDefault();
-
+            User user = GetUser();
 
             if (cart.Where(item => item.Status == 0).ToList().Count != 0)
                 SetCartHeader(cart.Select(p => new ShopCartViewModel()
@@ -118,8 +131,9 @@ namespace FloristStore.Controllers
         public JsonResult AddToCart(int id)
         {
             List<ShopCartViewModel> cart = new List<ShopCartViewModel>();
-            if (Session["ShopCart"] != null)
-                cart = Session["ShopCart"] as List<ShopCartViewModel>;
+
+            if (IsNotNullSession("ShopCart"))
+                cart = GetShopCartFromSession();
 
             ProductListViewModel product = GetProduct();
 
@@ -128,14 +142,15 @@ namespace FloristStore.Controllers
                 UpdateSession();
             else
                 AddToSession();
-            if (Session["CartHeader"] != null)
-                return Json(GetRecord(cart, Session["CartHeader"] as List<InvoiceHeader>), JsonRequestBehavior.AllowGet);
+
+            if (IsNotNullSession("CartHeader"))
+                return Json(GetRecord(cart, GetCartHeaderFromSession()));
 
             #region LocalFunction 
 
             ProductListViewModel GetProduct()
             {
-                return productTable.GetAll().Where(item => item.Id == id)
+                var x = productService.GetAll().Where(item => item.Id == id)
                   .Select(item => new ProductListViewModel
                   {
                       Id = item.Id,
@@ -143,8 +158,9 @@ namespace FloristStore.Controllers
                       Sal = item.Discount,
                       ProductName = item.Name,
                       Price = item.Price,
-                      Image = (item.ImageUrl != null || item.ImageUrl != "") ? "/www/Image/Uploade/ProductImage/" + item.ImageUrl : "/www/Image/Icon/picture.svg"
+                      Image = (item.ImageUrl != null || item.ImageUrl != "") ? "/Image/Uploade/ProductImage/" + item.ImageUrl : "/Image/Icon/picture.svg"
                   }).FirstOrDefault();
+                return x;
             }
             void AddToSession()
             {
@@ -161,18 +177,21 @@ namespace FloristStore.Controllers
                     Product = product,
                 });
             }
+
             void UpdateSession()
             {
                 int index = cart.FindIndex(item => item.Product.Id == id);
                 cart[index].Count += 1;
-                var query = productTable.GetAll().Where(item => item.Id == id).FirstOrDefault();
+                var query = productService.GetAll().Where(item => item.Id == id).FirstOrDefault();
                 int ProductsPrice = (int)(query.Price * (100 - query.Discount)) / 100;
                 cart[index].Price += ProductsPrice;
                 cart[index].Sal = (query.Price * cart[index].Count) - cart[index].Price;
             }
+
             #endregion
-            Session["ShopCart"] = cart;
-            return Json(GetCart(cart), JsonRequestBehavior.AllowGet);
+
+            SetSession("ShopCart", cart);
+            return Json(GetCart(cart));
         }
 
         //پر کردن تمام کارت دیتیل ههایی که فاکتور هدرشون نال هستن
@@ -180,7 +199,7 @@ namespace FloristStore.Controllers
         {
             foreach (var item in cart.Where(p => p.Status == 0))
             {
-                var query = productTable.GetAll().Where(itemm => itemm.Id == item.Product.Id).FirstOrDefault();
+                var query = productService.GetAll().Where(itemm => itemm.Id == item.Product.Id).FirstOrDefault();
                 //قیمت تکی محصول با محاسبه تخفیف
                 int ProductsPrice = (int)(query.Price *
                     (100 - query.Discount)) / 100;
@@ -193,7 +212,7 @@ namespace FloristStore.Controllers
                 //اگر اون فروشگاه تاحالا تو فاکتور نبوده یک بار ادش کن
                 Random random = new Random();
                 int FactorCode = random.Next(10000, 65000);
-                while (invoiceHeaderTable.GetAll().Where(p => p.FactorCode == FactorCode).Any())
+                while (invoiceHeaderService.GetAll().Where(p => p.FactorCode == FactorCode).Any())
                     FactorCode = random.Next(10000, 65000);
 
                 if (RecordCartHeader == null)
@@ -201,9 +220,7 @@ namespace FloristStore.Controllers
                     RecordCartHeader = new List<InvoiceHeader>();
                 }
 
-
-                string Email = Session["USER"] as string;
-                DataLayer.User user = userTable.GetAll().Where(g => g.Email == Email).FirstOrDefault();
+                User user = GetUser();
 
                 RecordCartHeader.Add(new InvoiceHeader
                 {
@@ -211,17 +228,16 @@ namespace FloristStore.Controllers
                     User = user,
                     FactorCode = FactorCode,
                     IsFinaly = false,
-                    RequestLevel = DataLayer.Enum.RequestLevel.Sending
+                    RequestLevel = RequestLevel.Sending
 
                 });
 
                 item.Status = RecordCartHeader.Any() ? RecordCartHeader[0].FactorCode : FactorCode;
 
-                Session["CartHeader"] = RecordCartHeader;
-                Session["ShopCart"] = cart;
+                SetSession("CartHeader", RecordCartHeader);
+                SetSession("ShopCart", cart);
             }
         }
-
         public bool AddFactors(List<InvoiceHeader> FactorHeaders, List<ShopCartViewModel> ShopCartViewModel)
         {
             try
@@ -230,8 +246,8 @@ namespace FloristStore.Controllers
                 {
                     factorHeaders.CreateDate = DateTime.Now;
                     factorHeaders.User = null;
-                    invoiceHeaderTable.Create(factorHeaders);
-                    invoiceHeaderTable.Save();
+                    invoiceHeaderService.Create(factorHeaders);
+                    invoiceHeaderService.Save();
                     foreach (var invoetails in ShopCartViewModel.Where(p => p.Status == factorHeaders.FactorCode).Select(p => new InvoiceDetail()
                     {
                         Count = p.Count,
@@ -244,8 +260,8 @@ namespace FloristStore.Controllers
                     {
 
                         invoetails.InvoiceHeader_Id = factorHeaders.Id;
-                        invoiceDetailTable.Create(invoetails);
-                        invoiceDetailTable.Save();
+                        invoiceDetailService.Create(invoetails);
+                        invoiceDetailService.Save();
                     }
                 }
 
@@ -265,12 +281,12 @@ namespace FloristStore.Controllers
         {
             if (count == 1 && status == false)
                 //Error
-                return Json(false, JsonRequestBehavior.AllowGet);
+                return Json(false);
 
 
-            List<ShopCartViewModel> cart = Session["ShopCart"] as List<ShopCartViewModel>;
+            List<ShopCartViewModel> cart = GetShopCartFromSession();
             int index = cart.FindIndex(item => item.Product.Id == ProductID);
-            var query = productTable.GetAll().Where(item => item.Id == ProductID).FirstOrDefault();
+            var query = productService.GetAll().Where(item => item.Id == ProductID).FirstOrDefault();
             int ProductsPrice = (int)(query.Price * (100 - query.Discount)) / 100;
             if (status == true)
             {
@@ -289,10 +305,12 @@ namespace FloristStore.Controllers
                     cart[index].Sal = (int)(query.Price * cart[index].Count) - (int)(((query.Price * (100 - query.Discount)) / 100) * cart[index].Count);
             }
 
-            Session["ShopCart"] = cart;
-            if (Session["CartHeader"] != null)
-                return Json(GetRecord(cart, Session["CartHeader"] as List<InvoiceHeader>), JsonRequestBehavior.AllowGet);
-            return Json(GetCart(cart), JsonRequestBehavior.AllowGet);
+            SetSession("ShopCart", cart);
+
+            if (IsNotNullSession("CartHeader"))
+                return Json(GetRecord(cart, GetCartHeaderFromSession()));
+
+            return Json(GetCart(cart));
         }
 
         #endregion
@@ -303,112 +321,80 @@ namespace FloristStore.Controllers
         {
             try
             {
-                List<ShopCartViewModel> cart = Session["ShopCart"] as List<ShopCartViewModel>;
+                List<ShopCartViewModel> cart = GetShopCartFromSession();
                 cart.Remove(cart.Where(item => item.Product.Id == productId).FirstOrDefault());
-                Session["ShopCart"] = cart;
-                if (Session["CartHeader"] != null)
-                    return Json(GetRecord(cart, Session["CartHeader"] as List<InvoiceHeader>), JsonRequestBehavior.AllowGet);
-                return Json(GetCart(cart), JsonRequestBehavior.AllowGet);
+
+                SetSession("ShopCart", cart);
+
+                if (IsNotNullSession("CartHeader"))
+                    return Json(GetRecord(cart, GetCartHeaderFromSession()));
+
+                return Json(GetCart(cart));
             }
             catch (Exception)
             {
-                return Json(false, JsonRequestBehavior.AllowGet);
+                return Json(false);
             }
         }
+
         public IActionResult ClearShopCart()
         {
-            Session["ShopCart"] = null;
-            if (Session["CartHeader"] != null)
-                Session["CartHeader"] = null;
+            ClearSession();
             return Redirect("/ShopCart");
         }
 
         #endregion
 
-        #region ZarinPal
-
         public IActionResult Payment()
         {
-            if (AddFactors(Session["CartHeader"] as List<InvoiceHeader>, Session["ShopCart"] as List<ShopCartViewModel>))
-            {
-                var shopCart = Session["ShopCart"] as List<ShopCartViewModel>;
-                var carHeader = Session["CartHeader"] as List<InvoiceHeader>;
-                decimal Amount = shopCart.Sum(g => g.Price);
-
-                System.Net.ServicePointManager.Expect100Continue = false;
-                ZarinPal.PaymentGatewayImplementationServicePortTypeClient zp = new ZarinPal.PaymentGatewayImplementationServicePortTypeClient();
-                string Authority;
-
-                int Status = zp.PaymentRequest(
-                    "XXXX-XXXX-XXXX-XXXX", (int)Amount / 10,
-                    "فروشگاه گل و گیاه",
-                    "soumayeh825@gmail.com"
-                    , "09155157736", "http://localhost:9112/ShopCart/Verify", out Authority);
-
-                if (Status == 100)
-                {
-                    //Response.Redirect("https://www.zarinpal.com/pg/StartPay/" + Authority);
-                    Response.Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + Authority);
-                }
-                else
-                {
-                    ViewBag.Error = "Error : " + Status;
-                }
-            }
             return View();
         }
 
-
-        public IActionResult Verify()
+        public IActionResult Verify(bool status)
         {
-
-            if (Request.QueryString["Status"] != "" && Request.QueryString["Status"] != null && Request.QueryString["Authority"] != "" && Request.QueryString["Authority"] != null)
+            if (!status)
             {
-                if (Request.QueryString["Status"].ToString().Equals("OK"))
-                {
-                    var shopCart = Session["ShopCart"] as List<ShopCartViewModel>;
-                    var carHeader = Session["CartHeader"] as List<InvoiceHeader>;
-                    decimal Amount = shopCart.Sum(g => g.Price);
-
-                    long RefID;
-                    System.Net.ServicePointManager.Expect100Continue = false;
-                    ZarinPal.PaymentGatewayImplementationServicePortTypeClient zp = new ZarinPal.PaymentGatewayImplementationServicePortTypeClient();
-
-                    int Status = zp.PaymentVerification(
-                        "XXXX-XXXX-XXXX-XXXX"
-                        , Request.QueryString["Authority"].ToString(),
-                        (int)Amount / 10, out RefID);
-
-                    if (Status == 100)
-                    {
-                        int factCode = carHeader[0].FactorCode;
-                        InvoiceHeader invoiceHeader = invoiceHeaderTable.GetAll().Where(g => g.FactorCode == factCode).FirstOrDefault();
-                        invoiceHeader.IsFinaly = true;
-                        invoiceHeaderTable.Save();
-                        ViewBag.IsSuccess = true;
-                        ViewBag.RefId = RefID;
-                        return Redirect("/User/Orders?isdone=true");
-                    }
-                    else
-                    {
-                        ViewBag.Status = Status;
-                    }
-
-                }
-                else
-                {
-                    Response.Write("Error! Authority: " + Request.QueryString["Authority"].ToString() + " Status: " + Request.QueryString["Status"].ToString());
-                }
+                ClearSession();
+                return Redirect("/ShopCart");
             }
-            else
-            {
-                Response.Write("Invalid Input");
-            }
-            ViewBag.IsSuccess = false;
+
+            var cartHeader = GetCartHeaderFromSession();
+            int factCode = cartHeader[0].FactorCode;
+            InvoiceHeader invoiceHeader = invoiceHeaderService.GetAll().Where(g => g.FactorCode == factCode).FirstOrDefault();
+            invoiceHeader.IsFinaly = true;
+            invoiceHeaderService.Save();
+            ClearSession();
+
             return View();
         }
 
-        #endregion
+        bool IsNotNullSession(string sessionName) => !string.IsNullOrEmpty(HttpContext.Session.GetString(sessionName));
+        void ClearSession() => HttpContext.Session.Clear();
+
+        private User GetUser()
+        {
+            User user = userService.GetAll().Where(g => g.Email == UserEmail).FirstOrDefault();
+            return user;
+        }
+
+        private void SetSession(string name, object data)
+        {
+            HttpContext.Session.SetString(name, JsonConvert.SerializeObject(data));
+        }
+
+        private List<InvoiceHeader> GetCartHeaderFromSession()
+        {
+            if (IsNotNullSession("CartHeader"))
+                return JsonConvert.DeserializeObject<List<InvoiceHeader>>(HttpContext.Session.GetString("CartHeader"));
+            return new List<InvoiceHeader>();
+        }
+
+        private List<ShopCartViewModel> GetShopCartFromSession()
+        {
+            if (IsNotNullSession("ShopCart"))
+                return JsonConvert.DeserializeObject<List<ShopCartViewModel>>(HttpContext.Session.GetString("ShopCart"));
+            return new List<ShopCartViewModel>();
+        }
 
     }
 }
